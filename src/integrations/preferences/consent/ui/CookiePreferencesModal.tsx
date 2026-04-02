@@ -230,7 +230,9 @@ function CookiePreferencesModal({
             allowMultiple
             className="space-y-3"
             items={accordionItems}
-            showIndicator={false}
+            headerClassName="gap-4 py-4 md:gap-5 md:py-5"
+            indicatorClassName="h-8 w-8 text-[1.9rem] md:h-9 md:w-9 md:text-[2rem]"
+            contentClassName="pb-5 pr-10 md:pb-6 md:pr-12"
             headerSlot={({ item, id, expanded }) => {
               const category = cookieCategories.find((c) => c.id === item.slug);
               if (!category) return null;

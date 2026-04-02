@@ -1,6 +1,15 @@
 ---
 title: "Real Estate Transactions"
-description: "We represent clients in all stages of real estate transactions."
+description: "We represent clients in all aspects of commercial and residential real estate transactions."
+featuredImage: "../../assets/areas-of-practice/real-estate-transactions.jpg"
 order: 4
 ---
+import AreaOfPracticeBody from "@/components/AreaOfPracticeBody.astro";
+
+<AreaOfPracticeBody
+  description={frontmatter.description}
+  featuredImage={frontmatter.featuredImage}
+  title={frontmatter.title}
+/>
+
 We advise clients through acquisitions, sales, leasing, financing, and deal structuring with careful attention to risk, timing, and the practical demands of closing.

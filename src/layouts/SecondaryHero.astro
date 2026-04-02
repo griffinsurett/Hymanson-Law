@@ -15,6 +15,7 @@
 
 import { getAuthorName } from "@/layouts/collections/helpers/layoutHelpers";
 import BackgroundMedia from "@/components/BackgroundMedia.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
 import BuildingsHeroImage from "@/assets/buildings.jpg";
 
 export interface Props {
@@ -61,27 +62,16 @@ const backgroundMedia = {
     {/* Hero content */}
     <div class="relative z-10 mx-auto flex w-full max-w-[80rem] items-center">
       <div class="max-w-4xl text-left">
-        {
-          eyebrow && (
-            <p class="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-secondary [text-shadow:none]">
-              {eyebrow}
-            </p>
-          )
-        }
-
-        <h1
-          class="font-newsreader text-[3rem] leading-[0.94] tracking-[-0.03em] text-heading [text-shadow:none] md:text-[4rem] lg:text-[5rem] xl:text-[5.5rem]"
-        >
-          {title}
-        </h1>
-
-        {
-          description && (
-            <p class="mt-6 max-w-3xl text-lg leading-relaxed text-text [text-shadow:none] md:text-xl">
-              {description}
-            </p>
-          )
-        }
+        <SectionHeading
+          as="h1"
+          align="left"
+          title={title}
+          description={description}
+          className="max-w-4xl"
+          eyebrowClass="[text-shadow:none]"
+          titleClass="font-newsreader text-[3rem] leading-[0.94] tracking-[-0.03em] text-heading [text-shadow:none] md:text-[4rem] lg:text-[5rem] xl:text-[5.5rem]"
+          descriptionClass="mt-6 max-w-3xl text-lg leading-relaxed text-text [text-shadow:none] md:text-xl"
+        />
 
         {/* Metadata row with icons */}
         {

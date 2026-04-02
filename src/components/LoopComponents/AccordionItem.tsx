@@ -10,6 +10,8 @@ export interface AccordionItemProps {
   isExpanded: boolean;
   onToggle: () => void;
   headerClassName?: string;
+  indicatorClassName?: string;
+  contentClassName?: string;
   headerSlot?: ReactNode;
 }
 
@@ -21,6 +23,8 @@ export default function AccordionItem({
   isExpanded,
   onToggle,
   headerClassName = "",
+  indicatorClassName = "",
+  contentClassName = "",
   headerSlot,
 }: AccordionItemProps) {
   return (
@@ -42,7 +46,7 @@ export default function AccordionItem({
           </div>
         )}
         <span
-          className={`inline-flex h-10 w-10 items-center justify-center text-[2.35rem] font-light leading-none text-heading transition-transform duration-200 ${isExpanded ? "rotate-45" : ""}`}
+          className={`inline-flex h-10 w-10 items-center justify-center text-[2.35rem] font-light leading-none text-heading transition-transform duration-200 ${isExpanded ? "rotate-45" : ""} ${indicatorClassName}`}
           aria-hidden="true"
         >
           +
@@ -50,7 +54,10 @@ export default function AccordionItem({
       </button>
 
       {isExpanded && children && (
-        <div id={`${id}-content`} className="pb-8 pr-12 md:pb-10 md:pr-16">
+        <div
+          id={`${id}-content`}
+          className={`pb-8 pr-12 md:pb-10 md:pr-16 ${contentClassName}`}
+        >
           <div className="prose prose-surface max-w-3xl text-text">{children}</div>
         </div>
       )}

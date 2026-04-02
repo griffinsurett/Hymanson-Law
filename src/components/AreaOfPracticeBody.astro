@@ -1,0 +1,30 @@
+---
+import FrontmatterImage from "@/components/FrontmatterImage.astro";
+
+interface Props {
+  description?: string;
+  featuredImage?: unknown;
+  title?: string;
+}
+
+const {
+  description,
+  featuredImage,
+  title = "",
+} = Astro.props as Props;
+---
+
+{description && <p class="text-xl leading-relaxed text-text lg:text-2xl">{description}</p>}
+
+{
+  featuredImage && (
+    <div class="not-prose mt-6 overflow-hidden rounded-[1.75rem]">
+      <FrontmatterImage
+        src={featuredImage}
+        alt={title}
+        class="h-full w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+  )
+}
