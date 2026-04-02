@@ -1,0 +1,149 @@
+---
+export interface Props {
+  quote?: string;
+  attribution?: string;
+  className?: string;
+  portraitSrc?: string;
+  portraitAlt?: string;
+}
+
+const {
+  quote = '"Integrity is the bedrock of our practice."',
+  attribution = "Gerald Hymanson",
+  className = "",
+  portraitSrc,
+  portraitAlt = "Gerald Hymanson portrait",
+} = Astro.props;
+---
+
+<article class={`hero-quote-card ${className}`.trim()}>
+  <div class="hero-quote-card__layout">
+    <div class="hero-quote-card__quote-pane">
+      <div class="hero-quote-card__quote-inner">
+        <blockquote class="hero-quote-card__quote">
+          {quote}
+        </blockquote>
+        <p class="hero-quote-card__attribution">{`— ${attribution}`}</p>
+      </div>
+    </div>
+
+    <div class="hero-quote-card__portrait-frame">
+      {
+        portraitSrc ? (
+          <img
+            src={portraitSrc}
+            alt={portraitAlt}
+            class="hero-quote-card__portrait-image"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class="hero-quote-card__portrait-placeholder" aria-hidden="true"></div>
+        )
+      }
+    </div>
+  </div>
+</article>
+
+<style>
+  .hero-quote-card {
+    width: 100%;
+    padding: 10px;
+    background: rgb(255 255 255 / 0.6);
+    border-radius: 20px;
+    outline: 1px solid rgb(255 255 255 / 0.3);
+    outline-offset: -1px;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  .hero-quote-card__layout {
+    display: grid;
+    gap: 10px;
+  }
+
+  .hero-quote-card__quote-pane {
+    display: grid;
+    min-height: 12rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .hero-quote-card__quote-inner {
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 0.75rem;
+  }
+
+  .hero-quote-card__quote {
+    color: #002346;
+    text-align: left;
+    font-family: "Newsreader", serif;
+    font-size: clamp(2.5rem, 3.7vw, 33px);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  .hero-quote-card__attribution {
+    color: #42474f;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 16px;
+    white-space: normal;
+  }
+
+  .hero-quote-card__portrait-frame {
+    min-height: 12rem;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+
+  .hero-quote-card__portrait-image,
+  .hero-quote-card__portrait-placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    object-fit: cover;
+  }
+
+  .hero-quote-card__portrait-placeholder {
+    background: linear-gradient(180deg, rgb(247 249 252 / 0.94) 0%, rgb(215 232 247 / 0.9) 100%);
+  }
+
+  @media (min-width: 768px) {
+    .hero-quote-card {
+      min-height: 233px;
+    }
+
+    .hero-quote-card__layout {
+      grid-template-columns: minmax(0, 1.18fr) minmax(194px, 0.82fr);
+      align-items: stretch;
+    }
+
+    .hero-quote-card__quote-pane {
+      grid-column: 1;
+      min-height: 213.61px;
+      padding: 1.1rem 1.5rem;
+    }
+
+    .hero-quote-card__portrait-frame {
+      grid-column: 2;
+      min-height: 213.61px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-quote-card__quote,
+    .hero-quote-card__attribution {
+      text-align: center;
+    }
+
+    .hero-quote-card__quote-inner {
+      justify-items: center;
+    }
+  }
+</style>

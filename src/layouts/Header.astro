@@ -1,0 +1,77 @@
+---
+// src/layouts/Header.astro
+/**
+ * Site Header with Navigation
+ */
+import { Image } from "astro:assets";
+import Button from "@/components/Button/Button";
+import ContentRenderer from "@/components/ContentRenderer/ContentRenderer.astro";
+import PhoneNumberButton from "@/components/PhoneNumberButton.astro";
+import { sharedPhoneNumberButtonProps } from "@/components/phoneNumberButtonConfig";
+import { related } from "@/utils/query";
+import HeaderLogo from "@/assets/hymanson-law-firm-logo-las-vegas.png";
+import { ctaData, siteData } from "@/content/siteData";
+---
+
+<header class="site-header w-full transition-transform duration-200">
+  <div class="site-header-inner w-full py-1 transition-[background-color,box-shadow,padding] duration-200">
+    <div class="flex w-full items-center justify-between px-4 md:px-8">
+      <!-- Logo -->
+      <a
+        href="/"
+        class="site-wordmark flex items-center transition-opacity duration-200 hover:opacity-85"
+      >
+        <Image
+          src={HeaderLogo}
+          alt="Hymanson Law logo"
+          width={120}
+          height={119}
+          format="png"
+          loading="eager"
+          class="h-14 w-14 md:h-18 md:w-18 lg:h-22 lg:w-22"
+        />
+        <span class="sr-only">{siteData.title}</span>
+      </a>
+
+      <!-- Navigation Menu using query -->
+      <div class="flex items-center gap-6">
+        <ContentRenderer
+          query={related("menu-items", "menu", "main-menu")}
+          variant="MenuVariant"
+          mode="responsive"
+          className="header-navigation"
+          hamburgerTransform={true}
+        />
+        <div class="header-phone-desktop">
+          <PhoneNumberButton {...sharedPhoneNumberButtonProps} />
+        </div>
+        <div class="header-sticky-cta">
+          <Button
+            href={ctaData.link}
+            variant="primary"
+            size="md"
+            rightIcon="lu:arrow-right"
+          >
+            Get Started
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const header = document.querySelector(".site-header");
+
+  if (header) {
+    const syncStickyState = () => {
+      const shouldStick = window.scrollY > 24;
+      header.classList.toggle("is-stuck", shouldStick);
+      root.classList.toggle("header-is-stuck", shouldStick);
+    };
+
+    syncStickyState();
+    window.addEventListener("scroll", syncStickyState, { passive: true });
+  }
+</script>

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "experience",
+    "title": "Years of Experience",
+    "description": "Trusted estate planning and business counsel built through decades of work.",
+    "value": 30,
+    "suffix": "+",
+    "order": 1
+  },
+  {
+    "id": "satisfaction",
+    "title": "Customer Satisfaction",
+    "description": "Client relationships built on responsiveness, clarity, and results.",
+    "value": 99,
+    "suffix": "%",
+    "order": 2
+  }
+]

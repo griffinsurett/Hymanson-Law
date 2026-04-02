@@ -1,0 +1,338 @@
+/* src/styles/global.css */
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400..800&family=Plus+Jakarta+Sans:wght@400..800&display=swap");
+@import "tailwindcss";
+
+/* Tell Tailwind to scan integration components for class usage */
+@source "../integrations";
+
+@import "../integrations/preferences/language/styles/language-switcher.css";
+@import "../integrations/preferences/shared/styles/preferences.css";
+@import "../integrations/preferences/accessibility/styles/accessibility.css";
+@import "@/styles/legal.css";
+@import "@/styles/system.css";
+@import "@/styles/menu.css";
+@import "@/styles/header.css";
+
+@theme {
+  --font-newsreader: "Newsreader", "Iowan Old Style", "Palatino Linotype", ui-serif, serif;
+  --font-plus-jakarta: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* ───── BRAND ───── */
+  --color-primary: #00396B;
+  --color-secondary: #735C00;
+  --color-accent: var(--color-primary);
+  --main-accent: var(--color-primary);
+  --color-MainDark: var(--color-primary);
+
+  /* ───── Neutrals ───── */
+  --color-text:         #42474F;
+  --color-heading:      oklch(14% 0.03 260);   /* slightly darker */
+  --color-bg:           oklch(99.5% 0.004 260); /* off-white */
+  --color-surface:      oklch(97.5% 0.006 260); /* cards, nav, modals */
+
+  /* color helpers */
+  --color-primary-50:   oklch(from var(--color-primary) calc(l + 0.40) c h);
+  --color-primary-100:  oklch(from var(--color-primary) calc(l + 0.35) c h);
+  --color-primary-200:  oklch(from var(--color-primary) calc(l + 0.25) c h);
+  --color-primary-300:  oklch(from var(--color-primary) calc(l + 0.15) c h);
+  --color-primary-400:  oklch(from var(--color-primary) calc(l + 0.08) c h);
+  --color-primary-500:  var(--color-primary);
+  --color-primary-600:  oklch(from var(--color-primary) calc(l - 0.08) c h);
+  --color-primary-700:  oklch(from var(--color-primary) calc(l - 0.15) c h);
+  --color-primary-800:  oklch(from var(--color-primary) calc(l - 0.25) c h);
+  --color-primary-900:  oklch(from var(--color-primary) calc(l - 0.35) c h);
+  --color-primary-950:  oklch(from var(--color-primary) calc(l - 0.45) c h);
+
+  --color-accent-50:   var(--color-primary-50);
+  --color-accent-100:  var(--color-primary-100);
+  --color-accent-200:  var(--color-primary-200);
+  --color-accent-300:  var(--color-primary-300);
+  --color-accent-400:  var(--color-primary-400);
+  --color-accent-500:  var(--color-primary-500);
+  --color-accent-600:  var(--color-primary-600);
+  --color-accent-700:  var(--color-primary-700);
+  --color-accent-800:  var(--color-primary-800);
+  --color-accent-900:  var(--color-primary-900);
+  --color-accent-950:  var(--color-primary-950);
+}
+
+body {
+  @apply overflow-x-hidden;
+  font-family: var(--font-plus-jakarta);
+  font-optical-sizing: auto;
+}
+
+@layer components {
+  button, a {
+    @apply cursor-pointer;
+  }
+
+  :is(h1, .h1) {
+    @apply text-5xl md:text-6xl lg:text-[83px] font-normal leading-[0.92];
+    font-family: var(--font-newsreader);
+    font-optical-sizing: auto;
+  }
+
+  :is(h2, .h2) {
+    @apply text-4xl sm:text-5xl lg:text-6xl font-normal leading-[0.95];
+    font-family: var(--font-newsreader);
+    font-optical-sizing: auto;
+  }
+
+  :is(h3, .h3) {
+    @apply text-3xl md:text-4xl font-normal leading-[1];
+    font-family: var(--font-newsreader);
+    font-optical-sizing: auto;
+  }
+
+  :is(h4, .h4) {
+    @apply text-2xl md:text-3xl font-medium leading-[1.05];
+    font-family: var(--font-newsreader);
+    font-optical-sizing: auto;
+  }
+
+  :is(h5, .h5) {
+    @apply text-xl md:text-2xl font-medium leading-[1.1];
+    font-family: var(--font-newsreader);
+    font-optical-sizing: auto;
+  }
+
+  :is(h6, .h6) {
+    @apply text-lg md:text-xl font-medium leading-[1.15];
+    font-family: var(--font-newsreader);
+    font-optical-sizing: auto;
+  }
+
+  p {
+    font-family: var(--font-plus-jakarta);
+    font-optical-sizing: auto;
+  }
+
+  button,
+  .btn-base,
+  .site-wordmark,
+  .menu-variant :is(a, button) {
+    font-family: var(--font-newsreader);
+    font-optical-sizing: auto;
+  }
+
+  /* Base button styles */
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2;
+    @apply font-semibold rounded-lg transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-gradient-pill {
+    @apply inline-flex items-center rounded-full shadow-lg;
+    @apply pl-5 pr-2 py-2 md:pl-6 md:pr-2.5 md:gap-4;
+    min-height: 3.75rem;
+  }
+
+  .btn-gradient-pill-primary {
+    @apply border border-transparent text-bg;
+    background: linear-gradient(
+      90deg,
+      var(--color-heading) 0%,
+      var(--color-primary) 100%
+    );
+  }
+
+  .btn-gradient-pill-secondary {
+    @apply border border-primary/10 bg-white;
+  }
+
+  .btn-gradient-pill .button-label {
+    @apply inline-flex items-center px-1;
+    line-height: 1;
+  }
+
+  .btn-gradient-pill .button-icon-right {
+    @apply inline-flex items-center justify-center rounded-full shrink-0;
+    width: 2rem;
+    height: 2rem;
+    min-width: 2rem;
+    transition: transform 220ms ease;
+  }
+
+  .btn-gradient-pill-secondary .button-label {
+    background: linear-gradient(
+      90deg,
+      var(--color-heading) 0%,
+      var(--color-primary) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .btn-gradient-pill-secondary .button-icon {
+    color: var(--color-primary);
+  }
+
+  .btn-gradient-pill-primary .button-icon-right {
+    @apply bg-white;
+    color: var(--color-primary);
+  }
+
+  .btn-gradient-pill-secondary .button-icon-right {
+    background: linear-gradient(
+      90deg,
+      var(--color-heading) 0%,
+      var(--color-primary) 100%
+    );
+    color: white;
+  }
+
+  .btn-gradient-pill:hover .button-icon-right {
+    animation: button-circle-bob 420ms ease-in-out infinite alternate;
+  }
+
+  .btn-gradient-pill.btn-sm {
+    @apply pl-4 pr-1.5 py-1.5 gap-2.5 text-sm;
+    min-height: 3rem;
+  }
+
+  .btn-gradient-pill.btn-sm .button-icon-right {
+    width: 2rem;
+    height: 2rem;
+    min-width: 2rem;
+  }
+
+  .btn-gradient-pill.btn-md {
+    @apply pl-5 pr-2 py-2 gap-3 text-base;
+    min-height: 3.5rem;
+  }
+
+  .btn-gradient-pill.btn-md .button-icon-right {
+    width: 2.25rem;
+    height: 2.25rem;
+    min-width: 2.25rem;
+  }
+
+  .btn-gradient-pill.btn-lg {
+    @apply pl-6 pr-2.5 py-2.5 gap-4 text-lg;
+    min-height: 4rem;
+  }
+
+  .btn-gradient-pill.btn-lg .button-icon-right {
+    width: 2.625rem;
+    height: 2.625rem;
+    min-width: 2.625rem;
+  }
+
+  .button-icon {
+    @apply inline-flex items-center justify-center shrink-0;
+  }
+
+  .button-label {
+    @apply inline-flex items-center;
+  }
+
+  /* Size variants */
+  .btn-none {
+    @apply p-0 text-sm;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-md {
+    @apply px-4 py-2 text-base;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-lg;
+  }
+
+  /* Link base styles */
+  .link-base {
+    @apply inline-flex items-center gap-1;
+    @apply text-primary hover:text-primary-700 hover:underline;
+    @apply bg-transparent font-normal;
+    @apply transition-colors duration-200;
+    @apply focus:outline-none focus:ring-0 focus:ring-offset-0;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Link sizes (no padding) */
+  .link-sm {
+    @apply text-sm;
+  }
+
+  .link-md {
+    @apply text-base;
+  }
+
+  .link-lg {
+    @apply text-lg;
+  }
+}
+
+@layer utilities {
+  .bg-primary-heading-gradient {
+    background: linear-gradient(
+      90deg,
+      var(--color-heading) 0%,
+      var(--color-primary) 100%
+    );
+  }
+
+  .text-primary-heading-gradient {
+    background: linear-gradient(
+      90deg,
+      var(--color-heading) 0%,
+      var(--color-primary) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-image-wash {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.96) 0%,
+        rgba(255, 255, 255, 0.9) 18%,
+        rgba(255, 255, 255, 0.72) 42%,
+        rgba(255, 255, 255, 0.32) 68%,
+        rgba(255, 255, 255, 0) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.08) 30%,
+        rgba(255, 255, 255, 0) 58%
+      );
+    pointer-events: none;
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes button-circle-bob {
+    from {
+      transform: translateX(-2px);
+    }
+    to {
+      transform: translateX(3px);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+}

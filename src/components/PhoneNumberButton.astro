@@ -1,0 +1,110 @@
+---
+import Icon from "@/components/Icon";
+import { find } from "@/utils/query";
+import { formatPhoneNumber } from "@/utils/string";
+import type { IconSize } from "@/integrations/icons";
+
+export interface Props {
+  className?: string;
+  textClass?: string;
+  iconSize?: IconSize;
+  mobileMode?: "hidden" | "link" | "text";
+  desktopMode?: "hidden" | "link" | "text" | "copy";
+}
+
+const {
+  className = "",
+  textClass = "text-base leading-none",
+  iconSize = "md",
+  mobileMode = "hidden",
+  desktopMode = "text",
+} = Astro.props;
+
+const phoneEntry = await find("contact-us", "phone");
+const phoneValue = phoneEntry?.data?.description ?? "";
+const phoneDisplay = phoneValue ? formatPhoneNumber(phoneValue) : "";
+const phoneUrl = phoneValue ? `${phoneEntry?.data?.linkPrefix || "tel:"}${phoneValue}` : undefined;
+
+const sharedClasses = `items-center gap-3 text-heading ${className}`.trim();
+---
+
+{
+  phoneDisplay && (
+    <>
+      {mobileMode === "link" && phoneUrl && (
+        <a
+          href={phoneUrl}
+          class={`inline-flex md:hidden ${sharedClasses}`}
+          aria-label={`Call ${phoneDisplay}`}
+        >
+          <Icon icon="fa6:phone" size={iconSize} className="text-current" />
+          <span class={textClass}>{phoneDisplay}</span>
+        </a>
+      )}
+
+      {mobileMode === "text" && (
+        <div class={`inline-flex md:hidden ${sharedClasses}`}>
+          <Icon icon="fa6:phone" size={iconSize} className="text-current" />
+          <span class={textClass}>{phoneDisplay}</span>
+        </div>
+      )}
+
+      {desktopMode === "copy" && (
+        <button
+          type="button"
+          class={`phone-number-copy hidden md:inline-flex ${sharedClasses}`}
+          data-phone-raw={phoneValue}
+          data-phone-display={phoneDisplay}
+          aria-label={`Copy ${phoneDisplay}`}
+        >
+          <Icon icon="fa6:phone" size={iconSize} className="text-current" />
+          <span class={textClass}>{phoneDisplay}</span>
+        </button>
+      )}
+
+      {desktopMode === "text" && (
+        <div class={`hidden md:inline-flex ${sharedClasses}`}>
+          <Icon icon="fa6:phone" size={iconSize} className="text-current" />
+          <span class={textClass}>{phoneDisplay}</span>
+        </div>
+      )}
+
+      {desktopMode === "link" && phoneUrl && (
+        <a
+          href={phoneUrl}
+          class={`hidden md:inline-flex ${sharedClasses}`}
+          aria-label={`Call ${phoneDisplay}`}
+        >
+          <Icon icon="fa6:phone" size={iconSize} className="text-current" />
+          <span class={textClass}>{phoneDisplay}</span>
+        </a>
+      )}
+    </>
+  )
+}
+
+<script>
+  document.querySelectorAll(".phone-number-copy").forEach((element) => {
+    if (element instanceof HTMLButtonElement) {
+      const defaultLabel = element.getAttribute("aria-label") ?? "Copy phone number";
+      const phoneRaw = element.dataset.phoneRaw ?? "";
+      const phoneDisplay = element.dataset.phoneDisplay ?? phoneRaw;
+
+      element.addEventListener("click", async () => {
+        if (!phoneRaw) return;
+
+        try {
+          await navigator.clipboard.writeText(phoneRaw);
+          element.setAttribute("aria-label", `Copied ${phoneDisplay}`);
+          element.classList.add("text-primary");
+          window.setTimeout(() => {
+            element.setAttribute("aria-label", defaultLabel);
+            element.classList.remove("text-primary");
+          }, 1600);
+        } catch {
+          element.setAttribute("aria-label", `Unable to copy ${phoneDisplay}`);
+        }
+      });
+    }
+  });
+</script>

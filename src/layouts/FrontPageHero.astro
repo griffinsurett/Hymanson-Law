@@ -1,0 +1,164 @@
+---
+// src/layouts/FrontPageHero.astro
+/**
+ * Front Page Hero Layout
+ *
+ * Full-width hero section with optimized background media for homepage.
+ *
+ * Features:
+ * - Responsive background images with LCP optimization
+ * - Optional video background with poster image
+ * - Large centered text with gradient overlay
+ * - Primary and secondary CTAs
+ * - Configurable minimum height (default 100vh)
+ * - Supports both static images and video backgrounds
+ *
+ * This is a layout component for landing pages.
+ * Use directly in your homepage or marketing pages.
+ */
+
+import Button from "@/components/Button/Button";
+import ContentRenderer from "@/components/ContentRenderer/ContentRenderer.astro";
+import HeroQuoteCard from "@/components/HeroQuoteCard.astro";
+import PhoneNumberButton from "@/components/PhoneNumberButton.astro";
+import { sharedPhoneNumberButtonProps } from "@/components/phoneNumberButtonConfig";
+import SectionHeading from "@/components/SectionHeading.astro";
+import BackgroundMedia from "@/components/BackgroundMedia.astro";
+import { ctaData } from "@/content/siteData";
+import { query } from "@/utils/query";
+import DefaultImg from "@/assets/background.svg";
+import JerryHymanson from "@/assets/jerry-hymanson.jpg";
+
+export interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  image?: any; // Astro image asset or public path
+  video?: {
+    src: string;
+    autoPlay?: boolean;
+    muted?: boolean;
+    loop?: boolean;
+    playsInline?: boolean;
+    controls?: boolean;
+    preload?: string;
+  };
+  primaryCTA?: {
+    text: string;
+    link: string;
+  };
+  secondaryCTA?: {
+    text: string;
+    link: string;
+  };
+  className?: string;
+  id?: string;
+  minHeight?: string;
+}
+
+const {
+  eyebrow = "Established Excellence",
+  title = "Welcome",
+  description,
+  image,
+  video,
+  primaryCTA = {
+    text: ctaData.text,
+    link: ctaData.link,
+  },
+  className = "",
+  id = "hero",
+  minHeight = "160vh",
+} = Astro.props;
+
+// Prepare optimized background media
+const backgroundMedia = {
+  image: {
+    src: image || DefaultImg,
+    imageClass: "bg-cover bg-center",
+    aboveTheFold: true, // Front page hero is always LCP
+  },
+  video: video
+    ? {
+        src: video.src,
+        autoPlay: video.autoPlay ?? true,
+        muted: video.muted ?? true,
+        loop: video.loop ?? true,
+        playsInline: video.playsInline ?? true,
+        controls: video.controls ?? false,
+        preload: video.preload ?? "metadata",
+        videoClass: "object-cover",
+      }
+    : undefined,
+  overlayClass: "bg-gradient-to-b from-black/30 to-black/60",
+};
+
+---
+
+<section id={id} class={`relative ${className}`}>
+  <div
+    class="relative flex items-center justify-start overflow-hidden"
+    style={`min-height: ${minHeight}`}
+  >
+    {/* Optimized background media with overlay */}
+    <BackgroundMedia backgroundMedia={backgroundMedia} />
+    <div class="hero-image-wash absolute inset-0 z-[1]" aria-hidden="true"></div>
+
+    {/* Hero Content */}
+    <div class="relative z-10 w-full max-w-3xl px-8 text-left sm:px-10 lg:ml-10 lg:px-12 xl:ml-16 xl:px-0">
+      <SectionHeading
+        as="h1"
+        eyebrow={eyebrow}
+        description={description}
+        className="max-w-3xl"
+        descriptionClass="mb-6 max-w-2xl text-lg leading-relaxed text-text md:text-xl"
+      >
+        <Fragment slot="title">
+          <slot name="title">{title}</slot>
+        </Fragment>
+      </SectionHeading>
+
+      {/* CTA Buttons */}
+      <div class="flex flex-wrap justify-start gap-4 lg:gap-12">
+        {
+          primaryCTA && (
+            <Button
+              href={primaryCTA.link}
+              variant="primary"
+              size="lg"
+              rightIcon="lu:arrow-right"
+              className="shadow-xl hover:shadow-2xl transition-shadow"
+            >
+              {primaryCTA.text}
+            </Button>
+          )
+        }
+
+        <PhoneNumberButton {...sharedPhoneNumberButtonProps} />
+      </div>
+    </div>
+
+    <div class="pointer-events-none lg:absolute lg:bottom-4 lg:right-4 z-10 w-[calc(100%-2rem)] max-w-[31rem] sm:w-full lg:max-w-[34rem]">
+      <HeroQuoteCard
+        className="pointer-events-auto"
+        portraitSrc={JerryHymanson.src}
+        portraitAlt="Jerry Hymanson"
+      />
+      <ContentRenderer
+        query={query("stats")}
+        variant="StatsVariant"
+        className="pointer-events-auto mt-4"
+      />
+    </div>
+  </div>
+
+  {/* Optional slot for additional content below hero */}
+  <slot />
+</section>
+
+<style>
+  h1,
+  p {
+    text-shadow: none;
+  }
+</style>
