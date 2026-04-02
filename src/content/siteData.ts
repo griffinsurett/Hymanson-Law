@@ -11,7 +11,7 @@ export const siteData = {
   address: "8816 Spanish Ridge Avenue, Las Vegas, NV 89148",
   footer: {
     description:
-      "A boutique firm committed to the highest standards of legal advocacy and strategic counsel since 1982.",
+      "A boutique firm committed to the highest standards of legal advocacy and strategic counsel since 1991.",
     connectLinks: [
       {
         label: "Areas of Practice",

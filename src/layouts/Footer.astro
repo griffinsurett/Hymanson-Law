@@ -10,12 +10,29 @@ import { Image } from "astro:assets";
 import PhoneNumberButton from "@/components/PhoneNumberButton.astro";
 import FooterLogo from "@/assets/logo-hymanson-transparent-white.png";
 import { siteData } from "@/content/siteData";
+import { getCollectionMeta, prepareCollectionEntries } from "@/utils/collections";
 import { query, sortByOrder } from "@/utils/query";
 import PreferencesLayout from "./PreferencesLayout.astro";
 
-const legalLinks = await query("legal").all();
-const practiceLinks = await query("areas-of-practice").orderBy(sortByOrder()).all();
-const servedLocationLinks = await query("where-we-serve").orderBy(sortByOrder()).all();
+const legalEntries = await query("legal").all();
+const practiceEntries = await query("areas-of-practice").orderBy(sortByOrder()).all();
+const servedLocationEntries = await query("where-we-serve").orderBy(sortByOrder()).all();
+
+const legalLinks = await prepareCollectionEntries(
+  legalEntries,
+  "legal",
+  getCollectionMeta("legal"),
+);
+const practiceLinks = await prepareCollectionEntries(
+  practiceEntries,
+  "areas-of-practice",
+  getCollectionMeta("areas-of-practice"),
+);
+const servedLocationLinks = await prepareCollectionEntries(
+  servedLocationEntries,
+  "where-we-serve",
+  getCollectionMeta("where-we-serve"),
+);
 ---
 
 <footer class="mt-auto bg-[linear-gradient(135deg,#020b16_0%,#08335d_100%)] text-white">
@@ -58,8 +75,8 @@ const servedLocationLinks = await query("where-we-serve").orderBy(sortByOrder())
           <ul class="space-y-4 text-lg leading-8 text-white/92">
             {practiceLinks.map((item) => (
               <li>
-                <a class="transition-colors duration-200 hover:text-white" href={`/areas-of-practice/${item.id}`}>
-                  {item.data.title}
+                <a class="transition-colors duration-200 hover:text-white" href={item.url}>
+                  {item.title}
                 </a>
               </li>
             ))}
@@ -75,8 +92,8 @@ const servedLocationLinks = await query("where-we-serve").orderBy(sortByOrder())
           <ul class="space-y-4 text-lg leading-8 text-white/92">
             {servedLocationLinks.map((item) => (
               <li>
-                <a class="transition-colors duration-200 hover:text-white" href={`/where-we-serve/${item.id}`}>
-                  {item.data.title}
+                <a class="transition-colors duration-200 hover:text-white" href={item.url}>
+                  {item.title}
                 </a>
               </li>
             ))}
@@ -124,8 +141,8 @@ const servedLocationLinks = await query("where-we-serve").orderBy(sortByOrder())
           <ul class="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm leading-6 text-white/78">
             {legalLinks.map((item) => (
               <li>
-                <a class="transition-colors duration-200 hover:text-white" href={`/${item.id}`}>
-                  {item.data.title}
+                <a class="transition-colors duration-200 hover:text-white" href={item.url}>
+                  {item.title}
                 </a>
               </li>
             ))}
