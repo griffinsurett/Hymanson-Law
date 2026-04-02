@@ -1,6 +1,5 @@
 export const sharedPhoneNumberButtonProps = {
   desktopMode: "copy",
-  mobileMode: "hidden",
   iconSize: "md",
   className: "transition-colors duration-200 hover:text-primary",
   textClass: "text-base leading-none md:text-lg lg:text-xl",

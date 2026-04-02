@@ -16,7 +16,7 @@
  * - featuredImage: Hero image for index page
  * - seo: SEO overrides
  */
-import { file } from "astro/loaders";
+import { file, glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 import { baseSchema, MenuSchema, MenuItemFields, refSchema } from "./schema";
 import { MenuItemsLoader } from "@/utils/loaders/MenuItemsLoader";
@@ -113,6 +113,15 @@ export const collections = {
         price: z.string().optional(),
         features: z.array(z.string()).default([]),
       }),
+  }),
+
+  "areas-of-practice": defineCollection({
+    loader: glob({
+      base: "./src/content/areas-of-practice",
+      pattern: "**/[!_]*.mdx",
+    }),
+    schema: ({ image }) =>
+      baseSchema({ image }),
   }),
 
   "where-we-serve": defineCollection({

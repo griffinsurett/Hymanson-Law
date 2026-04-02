@@ -5,11 +5,13 @@ import ContentRenderer from "@/components/ContentRenderer/ContentRenderer.astro"
 import { siteData } from "@/content/siteData";
 import {
   query,
-  whereArrayContains,
   sortByDate,
   sortByOrder,
 } from "@/utils/query";
 import FrontPageHero from "@/layouts/FrontPageHero.astro";
+import LocationsListSection from "@/layouts/LocationsListSection.astro";
+import AreasOfPracticeSection from "@/layouts/AreasOfPracticeSection.astro";
+import CTASection from "@/layouts/CTASection.astro";
 import BuildingsHeroImage from "@/assets/buildings.jpg";
 
 const servedStates = await query("where-we-serve")
@@ -39,23 +41,13 @@ const servedStatesLabel = servedStates.map((state) => state.data.title).join(", 
   </FrontPageHero>
 
   <main class="flex-1">
-    <ContentRenderer query={query("about-us")} variant="AccordionVariant" />
+    <!-- <ContentRenderer query={query("about-us")} variant="AccordionVariant" /> -->
 
-    <!-- Areas We Serve -->
-    <ContentRenderer
-      query={query("where-we-serve").orderBy(sortByOrder())}
-      variant="GridVariant"
-      columns={3}
-      gap="lg"
-    />
+    <LocationsListSection />
 
-    <!-- Filtered query - still gets meta from authors -->
-    <ContentRenderer
-      query={query("authors").where(whereArrayContains("tags", "featured"))}
-      variant="GridVariant"
-      columns={3}
-      gap="lg"
-    />
+    <AreasOfPracticeSection />
+
+    <CTASection />
 
     <!-- Testimonials with rating filter -->
     <ContentRenderer

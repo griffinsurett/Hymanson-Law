@@ -1,0 +1,19 @@
+---
+title: "Areas of Practice"
+description: "Focused counsel across estate planning, estate administration, business law, real estate transactions, and commercial litigation."
+hasPage: true
+itemsHasPage: true
+itemsAddToMenu:
+  - menu: "main-menu"
+addToMenu:
+  - menu: "main-menu"
+    order: 1
+  - menu: "footer-menu"
+---
+import ContentRenderer from "@/components/ContentRenderer/ContentRenderer.astro";
+import { query, sortByOrder } from "@/utils/query";
+
+<ContentRenderer
+  query={query("areas-of-practice").orderBy(sortByOrder())}
+  variant="ListVariant"
+/>

@@ -1,0 +1,64 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import PracticeEditorialRow from "@/components/LoopComponents/PracticeEditorialRow.astro";
+import { getCollectionMeta, prepareCollectionEntries } from "@/utils/collections";
+import { query, sortByOrder } from "@/utils/query";
+
+export interface Props {
+  className?: string;
+  title?: string;
+  description?: string;
+}
+
+const {
+  className = "",
+  title = "Our Expertise",
+  description = "Mastering the intricacies of the law to provide clarity in the most complex moments.",
+} = Astro.props;
+
+const titleWords = title.trim().split(/\s+/);
+const accentWord = titleWords.length > 1 ? titleWords[titleWords.length - 1] : titleWords[0];
+const leadingWords =
+  titleWords.length > 1 ? titleWords.slice(0, -1).join(" ") : "";
+
+const entries = await query("areas-of-practice")
+  .where((entry) => entry.id !== "_meta")
+  .orderBy(sortByOrder())
+  .all();
+
+const collectionMeta = getCollectionMeta("areas-of-practice");
+const practices = await prepareCollectionEntries(entries, "areas-of-practice", collectionMeta);
+---
+<!-- bg-[#FBF9F8] -->
+<section class={`overflow-hidden py-24 lg:py-32 ${className}`.trim()}>
+  <div class="mx-auto max-w-7xl px-6">
+    <SectionHeading
+      as="h2"
+      align="center"
+      description={description}
+      className="mx-auto max-w-4xl"
+      titleClass="font-newsreader text-[3.4rem] leading-[0.92] tracking-[-0.04em] text-heading md:text-[4.75rem] lg:text-[5.5rem]"
+      descriptionClass="mx-auto mt-5 max-w-3xl text-lg leading-relaxed text-text md:text-[1.375rem]"
+    >
+      <Fragment slot="title">
+        {leadingWords && <span class="text-heading">{leadingWords} </span>}
+        <span class="text-primary">{accentWord}</span>
+      </Fragment>
+    </SectionHeading>
+
+    <div class="mt-14 lg:mt-20">
+      <div class="relative">
+        <ul class="border-t border-heading/12">
+          {practices.map((practice) => (
+            <PracticeEditorialRow
+              title={practice.title}
+              description={practice.description}
+              url={practice.url}
+              featuredImage={practice.featuredImage}
+            />
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

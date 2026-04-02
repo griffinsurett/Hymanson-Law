@@ -1,0 +1,20 @@
+---
+import type { BaseVariantProps } from "../ContentRenderer.types";
+import ChecklistItem from "@/components/LoopComponents/ChecklistItem.astro";
+
+interface Props extends BaseVariantProps {}
+
+const { items = [], className = "", id } = Astro.props as Props;
+---
+
+<section id={id} class={className}>
+  {
+    items.length > 0 && (
+      <ul class="space-y-4 list-none">
+        {items.map((item) => (
+          <ChecklistItem title={item.title} url={item.url} />
+        ))}
+      </ul>
+    )
+  }
+</section>

@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+import Button from "@/components/Button/Button";
+import BuildingsHeroImage from "@/assets/buildings.jpg";
+
+export interface Props {
+  className?: string;
+  title?: string;
+  description?: string;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+const {
+  className = "",
+  title = "Begin a Professional Partnership",
+  description = "Schedule a confidential consultation with our principal attorneys to discuss your legal objectives.",
+  ctaText = "Lets Get Started",
+  ctaLink = "/contact-us",
+} = Astro.props;
+---
+
+<section class={`${className}`.trim()}>
+  <div class="mx-auto max-w-7xl px-6">
+    <div class="relative overflow-hidden rounded-[2.25rem] px-8 py-12 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
+      <Image
+        src={BuildingsHeroImage}
+        alt=""
+        widths={[768, 1280, 1600]}
+        sizes="(min-width: 1280px) 80rem, 100vw"
+        class="absolute inset-0 h-full w-full object-cover object-center"
+      />
+      <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,18,33,0.88)_0%,rgba(0,38,73,0.8)_50%,rgba(0,57,107,0.72)_100%)]"></div>
+
+      <div class="relative z-10 flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+        <div class="max-w-3xl">
+          <h2 class="max-w-2xl font-newsreader text-[3rem] leading-[0.92] tracking-[-0.03em] text-white md:text-[4rem]">
+            {title}
+          </h2>
+          <p class="mt-6 max-w-3xl text-lg leading-relaxed text-white/85 md:text-[1.5rem]">
+            {description}
+          </p>
+        </div>
+
+        <div class="shrink-0 lg:self-center">
+          <Button
+            href={ctaLink}
+            variant="secondary"
+            size="lg"
+            rightIcon="lu:arrow-right"
+            className="w-full justify-between shadow-xl lg:w-auto"
+          >
+            {ctaText}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

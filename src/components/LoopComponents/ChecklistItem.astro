@@ -1,0 +1,67 @@
+---
+export interface Props {
+  title: string;
+  url?: string;
+}
+
+const { title, url } = Astro.props;
+---
+
+<li>
+  {
+    url ? (
+      <a
+        href={url}
+        class="inline-flex items-center gap-3 text-primary transition-colors duration-200 hover:text-heading"
+      >
+        <span
+          aria-hidden="true"
+          class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-secondary text-secondary"
+        >
+          <svg
+            class="h-3.5 w-3.5"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3.5 8.2L6.4 11L12.5 4.8"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        <span class="text-[0.95rem] font-semibold uppercase tracking-[0.03em] underline-offset-4 hover:underline">
+          {title}
+        </span>
+      </a>
+    ) : (
+      <div class="inline-flex items-center gap-3 text-primary">
+        <span
+          aria-hidden="true"
+          class="inline-flex h-6 w-6 items-center justify-center rounded-full border border-secondary text-secondary"
+        >
+          <svg
+            class="h-3.5 w-3.5"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3.5 8.2L6.4 11L12.5 4.8"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        <span class="text-[0.95rem] font-semibold uppercase tracking-[0.03em]">
+          {title}
+        </span>
+      </div>
+    )
+  }
+</li>

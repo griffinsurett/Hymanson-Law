@@ -1,0 +1,106 @@
+---
+import { Image } from "astro:assets";
+import ContentRenderer from "@/components/ContentRenderer/ContentRenderer.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import JerryHymanson from "@/assets/jerry-hymanson.jpg";
+import { query, sortByOrder } from "@/utils/query";
+
+export interface Props {
+  className?: string;
+  title?: string;
+  description?: string;
+  cardTitle?: string;
+  cardDescription?: string;
+}
+
+const {
+  className = "",
+  title = "Trusted Counsel for Legacy, Family, and Business Matters.",
+  description = "Hymanson Law advises clients through estate planning, trust and estate administration, real estate transactions, commercial matters, and litigation with the steady judgment, responsiveness, and discretion complex matters require.",
+  cardTitle = "Unwavering Empathy",
+  cardDescription = "We believe that the best legal strategies are born from listening. Our partners spend as much time understanding your personal story as they do studying case law. This is the Hymanson difference.",
+} = Astro.props;
+---
+
+<section class={`py-20 lg:py-28 ${className}`.trim()}>
+  <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
+    <div class="relative min-h-[26rem] lg:min-h-[28rem]">
+      <div class="boutique-legacy-media absolute inset-y-0 left-0 w-[56%] overflow-hidden rounded-[2rem]">
+        <Image
+          src={JerryHymanson}
+          alt="Jerry Hymanson"
+          widths={[480, 768]}
+          sizes="(min-width: 1024px) 26rem, 60vw"
+          class="h-full w-full object-cover object-center"
+        />
+      </div>
+
+      <div class="boutique-legacy-card absolute bottom-6 left-[20%] right-0 rounded-[1.75rem] bg-white p-6 shadow-[0_28px_70px_rgba(12,30,55,0.12)] md:p-8">
+        <SectionHeading
+          as="h3"
+          title={cardTitle}
+          titleClass="font-newsreader text-[2rem] italic leading-none text-primary md:text-[2.45rem]"
+        />
+        <p class="mt-5 max-w-[28rem] text-lg leading-relaxed text-text">
+          {cardDescription}
+        </p>
+      </div>
+    </div>
+
+    <div class="max-w-2xl">
+      <h2 class="font-newsreader text-[3rem] leading-[0.96] text-heading md:text-[4rem]">
+        {title}
+      </h2>
+      <p class="mt-8 text-xl leading-relaxed text-text">
+        {description}
+      </p>
+
+      <ContentRenderer
+        query={query("where-we-serve").orderBy(sortByOrder())}
+        variant="ChecklistVariant"
+        className="mt-8"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .boutique-legacy-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.18) 0%,
+      rgb(255 255 255 / 0.32) 100%
+    );
+    pointer-events: none;
+  }
+
+  @media (max-width: 1023px) {
+    .boutique-legacy-media {
+      width: 72%;
+    }
+
+    .boutique-legacy-card {
+      left: 18%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .boutique-legacy-media {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      min-height: 18rem;
+    }
+
+    .boutique-legacy-card {
+      position: relative;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      margin: -3rem 1rem 0;
+    }
+  }
+</style>
