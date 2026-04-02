@@ -12,18 +12,14 @@ export const siteData = {
   footer: {
     description:
       "A boutique firm committed to the highest standards of legal advocacy and strategic counsel since 1991.",
-    connectLinks: [
+    menuLinks: [
       {
-        label: "Areas of Practice",
-        href: "/areas-of-practice",
+        label: "Home",
+        href: "/",
       },
       {
-        label: "Where We Serve",
-        href: "/where-we-serve",
-      },
-      {
-        label: "Frequently Asked Questions",
-        href: "/faq",
+        label: "About Us",
+        href: "/about-us",
       },
       {
         label: "Contact Us",

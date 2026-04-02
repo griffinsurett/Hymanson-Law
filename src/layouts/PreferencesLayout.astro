@@ -11,6 +11,10 @@
  * All use the same lazy-load, zero-impact pattern.
  */
 
+export interface Props {
+  className?: string;
+}
+
 // Cookie Consent Preferences
 import CookiePreferencesButton from "@/integrations/preferences/consent/ui/CookiePreferencesButton";
 import CookieConsentBanner from "@/integrations/preferences/consent/ui/CookieConsentBanner";
@@ -22,6 +26,8 @@ import AccessibilityButton from "@/integrations/preferences/accessibility/ui/Acc
 import BrowserTranslateScript from "@/integrations/preferences/language/core/scripts/BrowserTranslateScript.astro";
 // Language Switcher
 // import LanguageSwitcher from "@/integrations/preferences/language/ui/LanguageSwitcher";
+
+const { className = "" } = Astro.props;
 ---
 
 {/* Consent Script - Inline initialization, runs immediately */}
@@ -30,7 +36,7 @@ import BrowserTranslateScript from "@/integrations/preferences/language/core/scr
 {/* Browser Translation Script - Both native and Google enabled */}
 <BrowserTranslateScript enableNative={true} enableGoogle={true} />
 
-<div class="flex flex-wrap justify-center items-center gap-3">
+<div class={`flex flex-wrap items-center gap-3 ${className}`.trim()}>
 
 {/* Language Switcher - Client-side only */}
 {/*

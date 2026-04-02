@@ -36,7 +36,7 @@ export default function AccordionItem({
           <div className="min-w-0">{headerSlot}</div>
         ) : (
           <div className="min-w-0">
-            <h3 className="text-[1.55rem] font-medium leading-[1.15] tracking-[-0.03em] text-heading md:text-[2rem]">
+            <h3 className="text-[1.55rem] leading-[1.15] tracking-[-0.03em] text-heading md:text-[2rem]">
               {title}
             </h3>
           </div>
