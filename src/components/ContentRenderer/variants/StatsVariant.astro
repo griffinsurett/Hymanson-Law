@@ -20,19 +20,19 @@ const { items = [], className = "", id } = Astro.props as Props;
 <section id={id} class={className}>
   {
     items.length > 0 && (
-      <ul class="grid grid-cols-2 gap-4 list-none">
+      <ul class="grid list-none grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
         {items.map((item) => (
           <li class="min-w-0">
-            <article class="flex h-full min-h-[9rem] flex-col justify-center border border-white/30 bg-white/22 px-4 py-4 text-center shadow-[0_20px_45px_rgba(0,57,107,0.12)] backdrop-blur-md">
+            <article class="flex h-full min-h-[7.5rem] flex-col justify-center border border-white/30 bg-white/22 px-4 py-4 text-center shadow-[0_20px_45px_rgba(0,57,107,0.12)] backdrop-blur-md sm:min-h-[9rem]">
               <CountUpNumber
                 client:visible
                 end={item.value ?? 0}
                 suffix={item.suffix}
                 prefix={item.prefix}
                 decimals={item.decimals ?? 0}
-                className="text-primary-heading-gradient font-newsreader text-[3.15rem] leading-none md:text-[3.6rem]"
+                className="text-primary-heading-gradient font-newsreader text-[2.6rem] leading-none sm:text-[3.15rem] md:text-[3.6rem]"
               />
-              <p class="mt-2 text-[0.58rem] font-medium uppercase tracking-[0.2em] text-text/75 md:text-[0.68rem]">
+              <p class="mt-2 text-[0.56rem] font-medium uppercase tracking-[0.18em] text-text/75 sm:text-[0.58rem] md:text-[0.68rem]">
                 {item.title}
               </p>
             </article>
