@@ -29,9 +29,9 @@ const entries = await query("areas-of-practice")
 const collectionMeta = getCollectionMeta("areas-of-practice");
 const practices = await prepareCollectionEntries(entries, "areas-of-practice", collectionMeta);
 ---
-<!-- bg-[#FBF9F8] -->
-<section class={`overflow-hidden py-24 lg:py-32 ${className}`.trim()}>
-  <div class="mx-auto max-w-7xl px-6">
+<section class={`py-24 lg:py-32 ${className}`.trim()}>
+  <div class="w-full">
+    <div>
     <SectionHeading
       as="h2"
       align="center"
@@ -54,7 +54,6 @@ const practices = await prepareCollectionEntries(entries, "areas-of-practice", c
               title={practice.title}
               description={practice.description}
               url={practice.url}
-              featuredImage={practice.featuredImage}
             />
           ))}
         </ul>

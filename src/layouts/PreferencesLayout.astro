@@ -19,9 +19,9 @@ import ConsentScript from "@/integrations/preferences/consent/core/scripts/Conse
 // Accessibility Preferences
 import AccessibilityButton from "@/integrations/preferences/accessibility/ui/AccessibilityButton";
 
-// Language Switcher
-import LanguageSwitcher from "@/integrations/preferences/language/ui/LanguageSwitcher";
 import BrowserTranslateScript from "@/integrations/preferences/language/core/scripts/BrowserTranslateScript.astro";
+// Language Switcher
+// import LanguageSwitcher from "@/integrations/preferences/language/ui/LanguageSwitcher";
 ---
 
 {/* Consent Script - Inline initialization, runs immediately */}
@@ -33,12 +33,16 @@ import BrowserTranslateScript from "@/integrations/preferences/language/core/scr
 <div class="flex flex-wrap justify-center items-center gap-3">
 
 {/* Language Switcher - Client-side only */}
+{/*
 <LanguageSwitcher client:visible />
+*/}
 
 {/* CCPA Opt-Out Link */}
+{/*
 <a href="/privacy-policy#ccpa-rights" class="text-bg hover:text-bg"
   >Do Not Sell My Personal Information</a
 >
+*/}
 
 {/* Cookie Preferences Button - Client-side only */}
 <CookiePreferencesButton client:visible />

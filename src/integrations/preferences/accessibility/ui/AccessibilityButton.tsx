@@ -6,7 +6,7 @@
  * useAccessibility hook from core directly.
  */
 import { useState, lazy, Suspense, memo } from "react";
-import Button from "@/components/Button/Button";
+import Icon from "@/components/Icon";
 
 const AccessibilityModal = lazy(() => import("./AccessibilityModal"));
 
@@ -15,16 +15,16 @@ function AccessibilityButton() {
 
   return (
     <>
-      <Button
-        variant="link"
-        size="sm"
+      <button
+        type="button"
         onClick={() => setShowModal(true)}
         aria-label="Manage reading preferences"
         aria-expanded={showModal}
-        rightIcon="lucide:book-open"
+        className="inline-flex items-center gap-2 border-0 bg-transparent p-0 text-current transition-colors duration-200 hover:text-white"
       >
-        Reading Preferences
-      </Button>
+        <Icon icon="lucide:book-open" size="sm" className="text-current" />
+        <span className="text-sm leading-6 font-plus-jakarta">Reading Preferences</span>
+      </button>
 
       {showModal && (
         <Suspense fallback={null}>

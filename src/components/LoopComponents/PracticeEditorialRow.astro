@@ -1,47 +1,16 @@
 ---
-import { Image } from "astro:assets";
 import Icon from "@/components/Icon";
-import type { ImageMetadata } from "astro";
 
 export interface Props {
   title: string;
   description?: string;
   url?: string;
-  featuredImage?: ImageMetadata | { src: ImageMetadata; alt?: string };
 }
 
-const { title, description, url, featuredImage } = Astro.props;
-
-const imageAsset =
-  featuredImage &&
-  typeof featuredImage === "object" &&
-  "width" in featuredImage &&
-  "height" in featuredImage
-    ? featuredImage
-    : featuredImage &&
-        typeof featuredImage === "object" &&
-        "src" in featuredImage &&
-        typeof featuredImage.src === "object"
-      ? featuredImage.src
-      : undefined;
-
-const imageSrc =
-  featuredImage &&
-  typeof featuredImage === "object" &&
-  "src" in featuredImage &&
-  typeof featuredImage.src === "string"
-    ? featuredImage.src
-    : imageAsset?.src;
-const imageAlt =
-  featuredImage &&
-  typeof featuredImage === "object" &&
-  "alt" in featuredImage &&
-  featuredImage.alt
-    ? featuredImage.alt
-    : title;
+const { title, description, url } = Astro.props;
 ---
 
-<li class="relative z-0 overflow-visible border-b border-heading/12 transition-[z-index] duration-200 hover:z-30 focus-within:z-30">
+<li class="border-b border-heading/12">
   {
     url ? (
       <a
@@ -59,31 +28,6 @@ const imageAlt =
             <Icon icon="lu:arrow-up-right" size="xl" className="text-current" />
           </span>
         </span>
-
-        {
-          imageSrc && (
-            <div class="pointer-events-none absolute right-[7%] top-1/2 z-20 hidden w-[22rem] -translate-y-[calc(50%-1.5rem)] scale-[0.92] overflow-hidden rounded-[2rem] border border-white/60 opacity-0 shadow-[0_32px_85px_rgba(12,30,55,0.22)] transition-all duration-500 ease-out group-hover:-translate-y-1/2 group-hover:scale-100 group-hover:opacity-100 group-focus-visible:-translate-y-1/2 group-focus-visible:scale-100 group-focus-visible:opacity-100 xl:right-[11%] xl:w-[30rem] lg:block">
-              {
-                imageAsset ? (
-                  <Image
-                    src={imageAsset}
-                    alt={imageAlt}
-                    widths={[480, 768]}
-                    sizes="(min-width: 1280px) 30rem, 22rem"
-                    class="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.035] group-focus-visible:scale-[1.035]"
-                  />
-                ) : (
-                  <img
-                    src={imageSrc}
-                    alt={imageAlt}
-                    class="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.035] group-focus-visible:scale-[1.035]"
-                  />
-                )
-              }
-              <div class="absolute inset-0 bg-gradient-to-br from-white/8 via-transparent to-heading/12"></div>
-            </div>
-          )
-        }
       </a>
     ) : (
       <div class="grid gap-6 py-8 md:py-10 lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)_4.5rem] lg:items-start lg:gap-10">
@@ -98,31 +42,6 @@ const imageAlt =
             <Icon icon="lu:arrow-up-right" size="xl" className="text-current" />
           </span>
         </span>
-
-        {
-          imageSrc && (
-            <div class="pointer-events-none absolute right-[7%] top-1/2 z-20 hidden w-[22rem] -translate-y-1/2 overflow-hidden rounded-[2rem] border border-white/60 shadow-[0_32px_85px_rgba(12,30,55,0.22)] xl:right-[11%] xl:w-[30rem] lg:block">
-              {
-                imageAsset ? (
-                  <Image
-                    src={imageAsset}
-                    alt={imageAlt}
-                    widths={[480, 768]}
-                    sizes="(min-width: 1280px) 30rem, 22rem"
-                    class="h-full w-full object-cover object-center"
-                  />
-                ) : (
-                  <img
-                    src={imageSrc}
-                    alt={imageAlt}
-                    class="h-full w-full object-cover object-center"
-                  />
-                )
-              }
-              <div class="absolute inset-0 bg-gradient-to-br from-white/8 via-transparent to-heading/12"></div>
-            </div>
-          )
-        }
       </div>
     )
   }

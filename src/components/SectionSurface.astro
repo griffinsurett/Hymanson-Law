@@ -1,0 +1,27 @@
+---
+export interface Props {
+  className?: string;
+  containerClassName?: string;
+  surfaceClassName?: string;
+  contentClassName?: string;
+}
+
+const {
+  className = "",
+  containerClassName = "",
+  surfaceClassName = "",
+  contentClassName = "",
+} = Astro.props as Props;
+---
+
+<section class={`py-24 lg:py-32 ${className}`.trim()}>
+  <div class={`mx-auto max-w-7xl px-6 ${containerClassName}`.trim()}>
+    <div
+      class={`rounded-[2rem] border border-heading/10 bg-white px-6 py-12 md:px-10 md:py-14 lg:px-16 lg:py-16 ${surfaceClassName}`.trim()}
+    >
+      <div class={contentClassName}>
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>

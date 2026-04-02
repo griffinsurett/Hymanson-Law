@@ -12,6 +12,7 @@ import FrontPageHero from "@/layouts/FrontPageHero.astro";
 import LocationsListSection from "@/layouts/LocationsListSection.astro";
 import AreasOfPracticeSection from "@/layouts/AreasOfPracticeSection.astro";
 import CTASection from "@/layouts/CTASection.astro";
+import FAQSection from "@/layouts/FAQSection.astro";
 import BuildingsHeroImage from "@/assets/buildings.jpg";
 
 const servedStates = await query("where-we-serve")
@@ -41,47 +42,29 @@ const servedStatesLabel = servedStates.map((state) => state.data.title).join(", 
   </FrontPageHero>
 
   <main class="flex-1">
+    <div class="mx-auto w-full px-6 sm:px-10 md:px-15 lg:px-20">
     <!-- <ContentRenderer query={query("about-us")} variant="AccordionVariant" /> -->
 
-    <LocationsListSection />
+      <LocationsListSection />
 
-    <AreasOfPracticeSection />
+      <AreasOfPracticeSection />
 
-    <CTASection />
+      <CTASection />
 
-    <!-- Testimonials with rating filter -->
-    <ContentRenderer
+      <!-- Testimonials with rating filter -->
+      <!-- <ContentRenderer
       query={query("testimonials").where((entry) => entry.data.rating >= 4)}
       variant="MasonryVariant"
-    />
+      /> -->
 
-    <!-- FAQ ContentRenderer -->
-    <ContentRenderer
-      query={query("faq").orderBy(sortByOrder())}
-      variant="AccordionVariant"
-      allowMultiple={false}
-    />
+      <FAQSection />
 
-    <!-- Contact ContentRenderer -->
-    <ContentRenderer
+      <!-- Contact ContentRenderer -->
+      <!-- <ContentRenderer
       query={query("contact-us")}
       variant="ContactVariant"
       columns={2}
-    />
-
-    <!-- Blog with limit - auto-populates from blog meta -->
-    <ContentRenderer
-      query={query("blog").limit(2)}
-      variant="BlogVariant"
-      columns={2}
-    />
-
-    <!-- Recent Updates -->
-    <ContentRenderer
-      query={query("blog").orderBy(sortByDate()).limit(10)}
-      variant="ListVariant"
-      title="Recent Updates"
-      description="Latest from our blog"
-    />
+      /> -->
+    </div>
   </main>
 </BaseLayout>

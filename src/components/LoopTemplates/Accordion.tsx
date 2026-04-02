@@ -70,7 +70,7 @@ export default function Accordion({
   }, [expandedItems, items]);
 
   return (
-    <div className={`space-y-2 ${className}`}>
+    <div className={className}>
       {items.map((item, index) => {
         const itemId = item.slug || `item-${index}`;
         

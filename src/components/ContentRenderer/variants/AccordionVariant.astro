@@ -26,6 +26,8 @@ const {
   collectionUrl,
   collectionTitle,
   id,
+  showHeadingSection = true,
+  showButtonSection = true,
 } = Astro.props as Props;
 
 const viewAllText = `View All ${collectionTitle || ""}`.trim();
@@ -33,33 +35,32 @@ const bridgeId = id || "accordion";
 ---
 
 <section id={id} class={`py-16 ${className}`}>
-  {/* Header Section */}
   {
-    (title || description) && (
+    showHeadingSection && (title || description) && (
       <div class="mb-12">
-        {title && <h2 class="text-4xl font-bold mb-4">{title}</h2>}
+        {title && (
+          <h2 class="font-newsreader text-[2.8rem] leading-[0.96] text-heading md:text-[3.5rem]">
+            {title}
+          </h2>
+        )}
         {description && (
-          <p class="text-lg text-text max-w-3xl">{description}</p>
+          <p class="mt-4 max-w-3xl text-lg leading-relaxed text-text">
+            {description}
+          </p>
         )}
       </div>
     )
   }
 
-  {/* Accordion with ContentBridge */}
   {
     items.length > 0 && (
       <ContentBridge items={items} bridgeId={bridgeId}>
-        {/* 
-        Your existing Accordion component!
-        ContentBridge generates slot IDs as: `${bridgeId}-slot-${index}`
-        Just pass that pattern to your Accordion as contentSlotId
-      */}
         <Accordion
           items={items.map((item, index) => ({
             slug: item.slug,
             title: item.title || "Untitled",
             description: item.description,
-            contentSlotId: `${bridgeId}-slot-${index}`, // ← ContentBridge created this ID
+            contentSlotId: `${bridgeId}-slot-${index}`,
           }))}
           allowMultiple={allowMultiple}
           client:visible
@@ -68,9 +69,9 @@ const bridgeId = id || "accordion";
     )
   }
 
-  {/* Collection CTA */}
   {
-    shouldShowCollectionCTA(collectionUrl, items.length) && (
+    showButtonSection &&
+      shouldShowCollectionCTA(collectionUrl, items.length) && (
       <div class="mt-12 text-center">
         <Button
           href={collectionUrl}

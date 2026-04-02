@@ -1,0 +1,35 @@
+---
+import ContentRenderer from "@/components/ContentRenderer/ContentRenderer.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import { getCollectionMeta } from "@/utils/collections";
+import { query, sortByOrder } from "@/utils/query";
+
+export interface Props {
+  className?: string;
+  title?: string;
+}
+
+const { className = "", title } = Astro.props as Props;
+const faqMeta = getCollectionMeta("faq");
+const sectionTitle = title ?? faqMeta.title ?? "Frequently Asked Questions";
+---
+
+<section class={`py-24 lg:py-32 ${className}`.trim()}>
+  <div class="w-full">
+    <SectionHeading
+      as="h2"
+      align="center"
+      title={sectionTitle}
+      titleClass="font-newsreader text-[3rem] leading-[0.94] tracking-[-0.04em] text-primary md:text-[4rem] lg:text-[4.75rem]"
+    />
+
+    <ContentRenderer
+      query={query("faq").orderBy(sortByOrder())}
+      variant="AccordionVariant"
+      allowMultiple={false}
+      showHeadingSection={false}
+      showButtonSection={false}
+      className="mt-12 py-0 md:mt-14"
+    />
+  </div>
+</section>
