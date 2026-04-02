@@ -289,9 +289,8 @@ function CookiePreferencesModal({
 
       <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-4 shrink-0">
         <Button
-          variant="secondary"
+          variant="link"
           onClick={handleRejectAll}
-          className="flex-1"
           type="button"
           disabled={isPending}
         >

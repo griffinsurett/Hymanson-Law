@@ -123,11 +123,9 @@ export default function CookieConsentBanner() {
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button
-                  variant="secondary"
+                  variant="link"
                   onClick={handleRejectAll}
-                  fullWidth={true}
                   type="button"
-                  buttonWrapperClasses="text-center"
                   size="md"
                   disabled={isPending}
                 >

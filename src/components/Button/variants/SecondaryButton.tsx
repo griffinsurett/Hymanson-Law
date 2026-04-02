@@ -16,13 +16,15 @@ export default function SecondaryButton({
   ...props
 }: ButtonProps) {
   const variantClasses = getGradientPillButtonClasses("secondary");
+  const resolvedRightIcon =
+    typeof rightIcon === "undefined" ? "lu:arrow-right" : rightIcon;
 
   return (
     <ButtonBase
       {...props}
       className={`${variantClasses} ${className}`}
       leftIcon={renderButtonIcon(leftIcon, props.size)}
-      rightIcon={renderButtonIcon(rightIcon, props.size)}
+      rightIcon={renderButtonIcon(resolvedRightIcon, props.size)}
     />
   );
 }
