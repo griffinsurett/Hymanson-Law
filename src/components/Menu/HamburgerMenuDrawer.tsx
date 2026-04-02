@@ -5,7 +5,7 @@
  * Manages open/close state for mobile menu with checkbox-based hamburger button.
  */
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Modal from "@/components/Modal";
 import MobileMenuItem from "@/components/LoopComponents/Menu/MobileMenuItem";
 import HamburgerButton from "./HamburgerButton";
@@ -15,6 +15,7 @@ interface MobileMenuDrawerProps {
   className?: string;
   hamburgerTransform?: boolean;
   closeButton?: boolean;
+  children?: ReactNode;
 }
 
 export default function MobileMenuDrawer({
@@ -22,6 +23,7 @@ export default function MobileMenuDrawer({
   className = "",
   hamburgerTransform = true,
   closeButton = false,
+  children,
 }: MobileMenuDrawerProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -44,15 +46,15 @@ export default function MobileMenuDrawer({
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        position="center"
-        className="w-full max-w-full h-full bg-bg p-0 rounded-none"
-        overlayClass="bg-black/50"
+        position="top-full"
+        className="menu-mobile-dropdown mt-[5.5rem] w-full overflow-hidden rounded-none border-0 bg-white p-0 shadow-none"
+        overlayClass="bg-transparent"
         closeButton={closeButton}
         ariaLabel="Mobile navigation menu"
         ssr={false}
       >
         <nav
-          className={`${className} h-full overflow-y-auto p-6`}
+          className={`${className} max-h-[calc(100vh-5.5rem)] overflow-y-auto px-6 py-5`}
           aria-label="Mobile navigation"
         >
           <ul className="space-y-1">
@@ -64,6 +66,12 @@ export default function MobileMenuDrawer({
               />
             ))}
           </ul>
+
+          {children && (
+            <div className="mt-6 flex flex-col justify-center space-y-3 border-t border-black/10 pt-5">
+              {children}
+            </div>
+          )}
         </nav>
       </Modal>
     </>

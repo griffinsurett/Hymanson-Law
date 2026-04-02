@@ -42,7 +42,7 @@ function HamburgerButton({
       {/* Label styled as hamburger button */}
       <label
         htmlFor={id}
-        className="cursor-pointer p-2 text-text hover:text-primary transition-colors inline-flex items-center justify-center"
+        className="inline-flex cursor-pointer items-center justify-center p-2 text-primary transition-colors hover:text-primary/80"
       >
         <div className="w-6 h-5 relative flex items-center justify-center">
           {/* Top line */}

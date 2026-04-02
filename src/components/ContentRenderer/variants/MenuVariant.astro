@@ -10,8 +10,12 @@
 import type { BaseVariantProps } from "../ContentRenderer.types";
 import MenuList from '@/components/LoopTemplates/Menu/MenuList.astro';
 import MobileMenuDrawer from '@/components/Menu/HamburgerMenuDrawer';
+import Button from "@/components/Button/Button";
+import PhoneNumberButton from "@/components/PhoneNumberButton.astro";
+import { sharedPhoneNumberButtonProps } from "@/components/phoneNumberButtonConfig";
 import { buildMenuTree } from '@/utils/menuQueries';
 import { isTopLevelPlacement } from '@/utils/navigation/topLevelCheck';
+import { ctaData } from "@/content/siteData";
 
 type MenuMode = 'responsive' | 'flat-only' | 'hamburger-only';
 
@@ -74,7 +78,24 @@ const mobileHydrationStrategy =
           closeButton={closeButton}
           hamburgerTransform={hamburgerTransform}
           client:load
-        />
+        >
+          <Button
+            href={ctaData.link}
+            variant="primary"
+            size="lg"
+            rightIcon="lu:arrow-right"
+            className="w-full justify-center"
+          >
+            {ctaData.text}
+          </Button>
+          <PhoneNumberButton
+            {...sharedPhoneNumberButtonProps}
+            mobileMode="link"
+            desktopMode="hidden"
+            className="justify-center transition-colors duration-200 hover:text-primary"
+            textClass="text-base leading-none"
+          />
+        </MobileMenuDrawer>
       )}
       {mobileHydrationStrategy === 'visible' && (
         <MobileMenuDrawer
@@ -82,7 +103,24 @@ const mobileHydrationStrategy =
           closeButton={closeButton}
           hamburgerTransform={hamburgerTransform}
           client:visible
-        />
+        >
+          <Button
+            href={ctaData.link}
+            variant="primary"
+            size="lg"
+            rightIcon="lu:arrow-right"
+            className="w-full justify-center"
+          >
+            {ctaData.text}
+          </Button>
+          <PhoneNumberButton
+            {...sharedPhoneNumberButtonProps}
+            mobileMode="link"
+            desktopMode="hidden"
+            className="justify-center transition-colors duration-200 hover:text-primary"
+            textClass="text-base leading-none"
+          />
+        </MobileMenuDrawer>
       )}
       {mobileHydrationStrategy === 'media' && (
         <MobileMenuDrawer
@@ -90,7 +128,24 @@ const mobileHydrationStrategy =
           closeButton={closeButton}
           hamburgerTransform={hamburgerTransform}
           client:media="(max-width: 768px)"
-        />
+        >
+          <Button
+            href={ctaData.link}
+            variant="primary"
+            size="lg"
+            rightIcon="lu:arrow-right"
+            className="w-full justify-center"
+          >
+            {ctaData.text}
+          </Button>
+          <PhoneNumberButton
+            {...sharedPhoneNumberButtonProps}
+            mobileMode="link"
+            desktopMode="hidden"
+            className="justify-center transition-colors py-4 duration-200 hover:text-primary"
+            textClass="text-base leading-none"
+          />
+        </MobileMenuDrawer>
       )}
     </div>
   )}

@@ -49,7 +49,7 @@ export default function MobileMenuItem({
     return (
       <li>
         <div
-          className="flex items-center justify-between rounded-md transition-colors"
+          className="flex items-center justify-between rounded-xl transition-colors"
           style={{ paddingLeft: `${indent + 16}px` }}
         >
           {hasUrl ? (
@@ -58,7 +58,7 @@ export default function MobileMenuItem({
               onClick={onNavigate}
               target={openInNewTab ? "_blank" : undefined}
               rel={openInNewTab ? "noopener noreferrer" : undefined}
-              className="flex-1 py-3 font-medium text-heading hover:text-primary transition-colors"
+              className="flex-1 rounded-xl px-3 py-3 text-base font-medium text-heading transition-colors hover:bg-white/10 hover:text-primary"
             >
               {title}
             </a>
@@ -66,14 +66,14 @@ export default function MobileMenuItem({
             <button
               type="button"
               onClick={() => setIsExpanded(!isExpanded)}
-              className="flex-1 py-3 text-left font-medium text-heading hover:text-primary transition-colors"
+              className="flex-1 rounded-xl px-3 py-3 text-left text-base font-medium text-heading transition-colors hover:bg-white/10 hover:text-primary"
             >
               {title}
             </button>
           )}
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-3 text-text hover:text-primary transition-colors"
+            className="rounded-xl p-3 text-text transition-colors hover:bg-white/10 hover:text-primary"
             aria-expanded={isExpanded}
             aria-controls={`mobile-submenu-${slug}`}
             aria-label={isExpanded ? `Collapse ${title}` : `Expand ${title}`}
@@ -126,7 +126,7 @@ export default function MobileMenuItem({
         onClick={onNavigate}
         target={openInNewTab ? "_blank" : undefined}
         rel={openInNewTab ? "noopener noreferrer" : undefined}
-        className="block py-3 px-4 text-text hover:text-primary rounded-md transition-colors"
+        className="block rounded-xl px-4 py-3 text-base text-text transition-colors hover:bg-white/10 hover:text-primary"
         style={{ paddingLeft: `${indent + 16}px` }}
       >
         {title}

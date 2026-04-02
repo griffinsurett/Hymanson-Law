@@ -37,4 +37,12 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
+
+  .hero-frame .site-header .menu-mobile-dropdown {
+    background-color: rgb(255 255 255);
+  }
+
+  .hero-frame .site-header .menu-mobile-dropdown nav {
+    border-top: 1px solid rgb(0 0 0 / 0.08);
+  }
 }

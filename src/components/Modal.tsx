@@ -26,7 +26,8 @@ export interface ModalProps {
     | "bottom-left"
     | "bottom-right"
     | "top-left"
-    | "top-right";
+    | "top-right"
+    | "top-full";
   ssr?: boolean;
 }
 
@@ -51,6 +52,7 @@ const POSITION_CLASSES = {
   "bottom-right": "flex items-end justify-end p-4",
   "top-left": "flex items-start justify-start p-4",
   "top-right": "flex items-start justify-end p-4",
+  "top-full": "flex items-start justify-stretch",
 } as const;
 
 function Modal({
