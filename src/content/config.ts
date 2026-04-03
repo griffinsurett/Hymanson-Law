@@ -76,7 +76,7 @@ export const collections = {
       }),
   }),
 
-  "about-us": defineCollection({
+  "about": defineCollection({
     schema: ({ image }) =>
       baseSchema({ image })
   }),

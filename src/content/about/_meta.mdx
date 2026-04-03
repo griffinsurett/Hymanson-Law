@@ -1,0 +1,111 @@
+---
+title: "Gerald S. Hymanson"
+description: "Learn more about Gerald S. Hymanson, his background, admissions, and the estate, tax, business, litigation, and real estate matters he handles."
+hasPage: true
+itemsHasPage: false
+redirectFrom:
+  - "/aboutus"
+  - "/about-us"
+addToMenu:
+  - menu: "main-menu"
+  - menu: "footer-menu"
+    order: 1
+---
+import { Image } from "astro:assets";
+import JerryHymansonImage from "@/assets/jerry-hymanson.jpg";
+import ChecklistItem from "@/components/LoopComponents/ChecklistItem.astro";
+import { getServedStatesLabel } from "@/utils/servedStates";
+
+export const servedStatesLabel = await getServedStatesLabel();
+export const experienceItems = [
+  "All aspects of estate planning and estate settlement",
+  "Asset protection planning",
+  "All aspects of commercial and residential real estate transactions",
+  "Formation of entities such as corporations, partnerships, family limited partnerships, limited liability companies, and tax exempt organizations",
+  "Purchase and sale of businesses",
+  "Drafting of buy/sell agreements, partnership agreements, shareholder agreements, and operating agreements for limited liability companies",
+  "Preparation of federal and state estate tax returns, inheritance tax returns, fiduciary tax returns and tax exempt tax returns",
+  "Appearing before Internal Revenue Service and State taxing authorities",
+  "Litigating cases in the trial court regarding restrictive covenants, will and trust contests, removal of fiduciaries, collection matters, general probate matters, breach of contracts matters, quiet title matters, real estate matters and fraud claims",
+];
+
+<section class="py-20 lg:py-28">
+  <div class="grid gap-12 lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)] lg:items-start lg:gap-16">
+    <div class="relative">
+      <div class="overflow-hidden rounded-[2rem] bg-surface shadow-[0_28px_70px_rgba(12,30,55,0.14)]">
+        <Image
+          src={JerryHymansonImage}
+          alt="Gerald S. Hymanson"
+          widths={[640, 960]}
+          sizes="(min-width: 1024px) 24rem, 100vw"
+          class="h-full w-full object-cover object-center"
+        />
+      </div>
+
+      <div class="mt-8 rounded-[1.75rem] border border-primary/10 bg-white p-6 shadow-[0_20px_50px_rgba(12,30,55,0.08)] md:p-8">
+        <h3 class="font-newsreader text-[2.2rem] leading-[0.95] text-heading md:text-[2.6rem]">
+          Federal Court Admissions
+        </h3>
+        <ul class="mt-6 space-y-3 text-lg leading-relaxed text-text">
+          <li>United States Court of Appeals, Third Circuit</li>
+          <li>United States District Court, District of New Jersey</li>
+          <li>United States District Court, Southern District of New York</li>
+          <li>United States District Court, Eastern District of New York</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="max-w-4xl">
+      <h2 class="mt-4 font-newsreader text-[3rem] leading-[0.94] text-heading md:text-[4rem]">
+        Experience built across law, tax, accounting, and business.
+      </h2>
+
+      <div class="mt-8 space-y-6 text-lg leading-relaxed text-text md:text-xl">
+        <p>
+          Combining a deep knowledge of local, state and federal laws with a personal
+          touch, Hymanson Law takes the time to understand your unique needs. Since
+          1991, Hymanson Law has been solving clients&apos; legal matters in {servedStatesLabel}.
+        </p>
+
+        <p>
+          Gerald S. Hymanson is an attorney licensed to practice law in the states of
+          New Jersey and New York, and concentrates his practice in the areas of Estate
+          and Tax Planning, Wealth and Succession Planning, Estate and Trust Settlement
+          and Litigation, Business Planning, Commercial Litigation and all aspects of
+          Real Estate transactions.
+        </p>
+
+        <p>
+          Jerry graduated Emory University Law School in 1989 with a concentration in
+          Business, Estate and Tax Planning. He received his undergraduate degree in
+          Accounting from Emory University in 1986. After spending several years in the
+          tax department of Deloitte &amp; Touche, he established his own law firm in
+          1991.
+        </p>
+
+        <p>
+          With over 25 years of legal, tax, accounting and business experience, Jerry
+          has represented clients in:
+        </p>
+      </div>
+
+      <ul class="mt-8 grid list-none gap-x-10 gap-y-6 p-0 md:grid-cols-2">
+        {experienceItems.map((item) => (
+          <ChecklistItem title={item} />
+        ))}
+      </ul>
+
+      <div class="mt-10 rounded-[1.75rem] border border-primary/10 bg-white p-6 shadow-[0_20px_50px_rgba(12,30,55,0.08)] md:p-8">
+        <h3 class="font-newsreader text-[2.25rem] leading-none text-heading md:text-[2.6rem]">
+          Professional Leadership
+        </h3>
+        <p class="mt-6 text-lg leading-relaxed text-text md:text-xl">
+          As an active member of The Estate Plan Advisory Counsel, Jerry actively
+          lectures at national conferences on Estate Planning, Estate Administration
+          and Asset Protection. Jerry lectures throughout {servedStatesLabel} on
+          Estate and Tax Planning.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
