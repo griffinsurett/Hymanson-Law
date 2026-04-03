@@ -18,6 +18,8 @@ interface Props {
   description?: string;
   className?: string;
   hiddenFields?: Record<string, string | number | boolean>;
+  defaultPracticeArea?: string;
+  hidePracticeAreaField?: boolean;
 }
 
 const {
@@ -25,6 +27,8 @@ const {
   description,
   className = "",
   hiddenFields = {},
+  defaultPracticeArea,
+  hidePracticeAreaField = false,
 } = Astro.props;
 const contactFormId =
   import.meta.env.PUBLIC_FORMSPREE_CONTACT_ID ||
@@ -47,6 +51,7 @@ const practiceAreaOptions = practiceAreaEntries
     value: entry.slug,
     label: entry.data.title,
   }));
+const practiceAreaValueSet = new Set(practiceAreaOptions.map((option) => option.value));
 
 const whereWeServeEntries = await getCollection("where-we-serve");
 const serviceLocationOptions = whereWeServeEntries
@@ -56,10 +61,22 @@ const serviceLocationOptions = whereWeServeEntries
     value: entry.slug,
     label: humanizeSlug(entry.slug || entry.id),
   }));
+const serviceLocationValueSet = new Set(
+  serviceLocationOptions.map((option) => option.value),
+);
+const inferredServiceLocation =
+  !isContactPage && serviceLocationValueSet.has(pageSlug) ? pageSlug : undefined;
+const resolvedDefaultPracticeArea =
+  typeof defaultPracticeArea === "string" && practiceAreaValueSet.has(defaultPracticeArea)
+    ? defaultPracticeArea
+    : "";
 
 const combinedHiddenFields = {
+  ...(inferredServiceLocation ? { serviceLocation: inferredServiceLocation } : {}),
+  ...(hidePracticeAreaField && resolvedDefaultPracticeArea
+    ? { practiceArea: resolvedDefaultPracticeArea }
+    : {}),
   ...hiddenFields,
-  ...(!isContactPage && pageSlug ? { serviceLocation: pageSlug } : {}),
 };
 
 const fieldLabelClassName =
@@ -145,17 +162,21 @@ const fieldTextareaClassName =
       )
     }
 
-    <Select
-      name="practiceArea"
-      label="Practice Area Of Interest"
-      required={true}
-      options={practiceAreaOptions}
-      placeholder="Select a practice area"
-      defaultValue=""
-      containerClassName="mb-4"
-      labelClassName={fieldLabelClassName}
-      selectClassName={fieldInputClassName}
-    />
+    {
+      !hidePracticeAreaField && (
+        <Select
+          name="practiceArea"
+          label="Practice Area Of Interest"
+          required={true}
+          options={practiceAreaOptions}
+          placeholder="Select a practice area"
+          defaultValue={resolvedDefaultPracticeArea}
+          containerClassName="mb-4"
+          labelClassName={fieldLabelClassName}
+          selectClassName={fieldInputClassName}
+        />
+      )
+    }
 
     <Textarea
       name="message"

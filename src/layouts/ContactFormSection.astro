@@ -16,6 +16,8 @@ export interface Props {
   description?: string;
   items?: ContactLink[];
   hiddenFields?: Record<string, string | number | boolean>;
+  defaultPracticeArea?: string;
+  hidePracticeAreaField?: boolean;
 }
 
 const {
@@ -25,6 +27,8 @@ const {
   description = "Let us help you navigate your legal journey with the attention and expertise it deserves. Fill out the form, and a member of our team will contact you shortly.",
   items: propItems,
   hiddenFields,
+  defaultPracticeArea,
+  hidePracticeAreaField = false,
 } = Astro.props;
 
 const items = propItems ?? (await getContactLinks());
@@ -143,7 +147,11 @@ const sectionAnimation = animationProps("fade-in-scale", {
       </div>
 
       <div class="rounded-[2rem] bg-white p-6 shadow-[0_24px_60px_rgba(5,18,33,0.18)] sm:p-8 lg:p-10">
-        <ContactForm hiddenFields={hiddenFields} />
+        <ContactForm
+          hiddenFields={hiddenFields}
+          defaultPracticeArea={defaultPracticeArea}
+          hidePracticeAreaField={hidePracticeAreaField}
+        />
       </div>
     </div>
   </div>
