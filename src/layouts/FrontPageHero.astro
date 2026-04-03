@@ -101,14 +101,14 @@ const ctaAnimation = animationProps("fade-in-up", {
   delay: 180,
 });
 
-const quoteCardAnimation = animationProps("fade-in-left", {
+const quoteCardAnimation = animationProps("fade-in-up", {
   once: true,
   delay: 280,
 });
 
 ---
 
-<section id={id} class={`relative ${className}`}>
+<section id={id} class={`relative overflow-x-clip ${className}`}>
   <div class="relative overflow-hidden px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-28 lg:flex lg:min-h-[140vh] lg:items-center lg:justify-start lg:px-0 lg:py-0">
     {/* Optimized background media with overlay */}
     <BackgroundMedia backgroundMedia={backgroundMedia} />
@@ -213,7 +213,7 @@ const quoteCardAnimation = animationProps("fade-in-left", {
 
   :root:not([data-hero-quote-ready="true"]) .hero-quote-reveal {
     opacity: 0 !important;
-    transform: translateX(-30px) !important;
+    transform: translateY(24px) !important;
     pointer-events: none;
   }
 </style>

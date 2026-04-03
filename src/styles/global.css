@@ -56,10 +56,21 @@
   --color-accent-950:  var(--color-primary-950);
 }
 
+html,
 body {
-  @apply overflow-x-hidden;
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+body {
   font-family: var(--font-plus-jakarta);
   font-optical-sizing: auto;
+}
+
+#app,
+.hero-frame {
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 @layer components {
