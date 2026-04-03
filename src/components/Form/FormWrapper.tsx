@@ -28,7 +28,6 @@ export interface FormWrapperProps {
   formMethod?: FormHTMLAttributes<HTMLFormElement>["method"];
   useNativeFormSubmission?: boolean;
   reloadOnSuccess?: boolean;
-  formspreeFormName?: string;
   formspreeExcludeKeys?: string[];
   successMessage?: string;
   errorMessage?: string;
@@ -47,7 +46,6 @@ export default function FormWrapper({
   formMethod = "post",
   useNativeFormSubmission = false,
   reloadOnSuccess,
-  formspreeFormName,
   formspreeExcludeKeys = [],
   successMessage = "Form submitted successfully!",
   errorMessage = "An error occurred. Please try again.",
@@ -142,7 +140,6 @@ export default function FormWrapper({
           endpoint: resolvedFormspreeEndpoint,
           values: data,
           excludeKeys: formspreeExcludeKeys,
-          formName: formspreeFormName,
         });
       } else {
         throw new Error("Form submission handler is not configured.");

@@ -48,9 +48,9 @@ const {
 <style>
   .hero-quote-card {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     background: rgb(255 255 255 / 0.6);
-    border-radius: 20px;
+    border-radius: 18px;
     outline: 1px solid rgb(255 255 255 / 0.3);
     outline-offset: -1px;
     backdrop-filter: blur(2px);
@@ -59,13 +59,15 @@ const {
 
   .hero-quote-card__layout {
     display: grid;
-    gap: 10px;
+    gap: 8px;
+    grid-template-columns: minmax(0, 1.42fr) minmax(128px, 0.58fr);
+    align-items: stretch;
   }
 
   .hero-quote-card__quote-pane {
     display: grid;
-    min-height: 12rem;
-    padding: 1rem 1.25rem;
+    min-height: 9.5rem;
+    padding: 0.85rem 1rem;
   }
 
   .hero-quote-card__quote-inner {
@@ -79,7 +81,7 @@ const {
     color: #002346;
     text-align: left;
     font-family: "Newsreader", serif;
-    font-size: clamp(2.5rem, 3.7vw, 33px);
+    font-size: clamp(1.75rem, 4.5vw, 3.2rem);
     font-style: italic;
     font-weight: 400;
     line-height: 1.02;
@@ -89,16 +91,16 @@ const {
   .hero-quote-card__attribution {
     color: #42474f;
     text-align: left;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 16px;
+    line-height: 1.1;
     white-space: normal;
   }
 
   .hero-quote-card__portrait-frame {
-    min-height: 12rem;
+    min-height: 9.5rem;
     overflow: hidden;
-    border-radius: 15px;
+    border-radius: 14px;
   }
 
   .hero-quote-card__portrait-image,
@@ -106,7 +108,7 @@ const {
     display: block;
     width: 100%;
     height: 100%;
-    border-radius: 15px;
+    border-radius: 14px;
     object-fit: cover;
   }
 
@@ -117,9 +119,12 @@ const {
   @media (min-width: 768px) {
     .hero-quote-card {
       min-height: 233px;
+      padding: 10px;
+      border-radius: 20px;
     }
 
     .hero-quote-card__layout {
+      gap: 10px;
       grid-template-columns: minmax(0, 1.18fr) minmax(194px, 0.82fr);
       align-items: stretch;
     }
@@ -130,24 +135,47 @@ const {
       padding: 1.1rem 1.5rem;
     }
 
+    .hero-quote-card__quote {
+      font-size: clamp(2.5rem, 3.7vw, 33px);
+    }
+
+    .hero-quote-card__attribution {
+      font-size: 15px;
+      line-height: 16px;
+    }
+
     .hero-quote-card__portrait-frame {
       grid-column: 2;
       min-height: 213.61px;
+      border-radius: 15px;
+    }
+
+    .hero-quote-card__portrait-image,
+    .hero-quote-card__portrait-placeholder {
+      border-radius: 15px;
     }
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 479px) {
+    .hero-quote-card__layout {
+      grid-template-columns: minmax(0, 1.5fr) minmax(112px, 0.5fr);
+    }
+
+    .hero-quote-card__quote-pane {
+      min-height: 8.75rem;
+      padding: 0.75rem 0.9rem;
+    }
+
     .hero-quote-card__portrait-frame {
-      order: -1;
+      min-height: 8.75rem;
     }
 
-    .hero-quote-card__quote,
+    .hero-quote-card__quote {
+      font-size: clamp(1.55rem, 7vw, 2.2rem);
+    }
+
     .hero-quote-card__attribution {
-      text-align: center;
-    }
-
-    .hero-quote-card__quote-inner {
-      justify-items: center;
+      font-size: 13px;
     }
   }
 </style>

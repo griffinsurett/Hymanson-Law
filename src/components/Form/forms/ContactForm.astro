@@ -11,6 +11,7 @@ import Select from "@/components/Form/inputs/Select";
 import Checkbox from "@/components/Form/inputs/Checkbox";
 import Textarea from "@/components/Form/inputs/Textarea";
 import Button from "@/components/Button/Button";
+import { humanizeSlug } from "@/utils/string";
 
 interface Props {
   title?: string;
@@ -35,6 +36,10 @@ const handleSubmit = async () => {
   );
 };
 
+const pathname = Astro.url.pathname.replace(/^\/+|\/+$/g, "");
+const pageSlug = pathname.split("/").filter(Boolean).at(-1) ?? "";
+const isContactPage = pageSlug === "contact-us";
+
 const practiceAreaEntries = await getCollection("areas-of-practice");
 const practiceAreaOptions = practiceAreaEntries
   .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
@@ -42,6 +47,20 @@ const practiceAreaOptions = practiceAreaEntries
     value: entry.slug,
     label: entry.data.title,
   }));
+
+const whereWeServeEntries = await getCollection("where-we-serve");
+const serviceLocationOptions = whereWeServeEntries
+  .filter((entry) => entry.id !== "_meta")
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
+  .map((entry) => ({
+    value: entry.slug,
+    label: humanizeSlug(entry.slug || entry.id),
+  }));
+
+const combinedHiddenFields = {
+  ...hiddenFields,
+  ...(!isContactPage && pageSlug ? { serviceLocation: pageSlug } : {}),
+};
 
 const fieldLabelClassName =
   "mb-3 block text-xs font-semibold uppercase tracking-[0.08em] text-heading/70";
@@ -67,9 +86,8 @@ const fieldTextareaClassName =
     resetOnSuccess={true}
     className="w-full"
   >
-    <input type="hidden" name="formName" value="Greastro Contact Form" />
     {
-      Object.entries(hiddenFields).map(([name, value]) => (
+      Object.entries(combinedHiddenFields).map(([name, value]) => (
         <input type="hidden" name={name} value={String(value)} />
       ))
     }
@@ -110,6 +128,22 @@ const fieldTextareaClassName =
       labelClassName={fieldLabelClassName}
       inputClassName={fieldInputClassName}
     />
+
+    {
+      isContactPage && (
+        <Select
+          name="serviceLocation"
+          label="State We Serve"
+          required={true}
+          options={serviceLocationOptions}
+          placeholder="Select a state"
+          defaultValue=""
+          containerClassName="mb-4"
+          labelClassName={fieldLabelClassName}
+          selectClassName={fieldInputClassName}
+        />
+      )
+    }
 
     <Select
       name="practiceArea"

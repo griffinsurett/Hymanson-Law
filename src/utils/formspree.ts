@@ -5,7 +5,6 @@ interface SubmitToFormspreeParams {
   endpoint: string;
   values: FormValues;
   excludeKeys?: string[];
-  formName?: string;
 }
 
 interface FormspreeResponse {
@@ -18,7 +17,6 @@ export async function submitToFormspree({
   endpoint,
   values,
   excludeKeys = [],
-  formName,
 }: SubmitToFormspreeParams) {
   if (!endpoint) {
     throw new Error("Form configuration is missing a Formspree endpoint.");
@@ -29,10 +27,6 @@ export async function submitToFormspree({
   );
 
   const payload: FormValues = Object.fromEntries(sanitizedEntries);
-
-  if (formName && !payload.formName) {
-    payload.formName = formName;
-  }
 
   if (typeof window !== "undefined" && window.location?.href) {
     payload.pageUrl = payload.pageUrl ?? window.location.href;
