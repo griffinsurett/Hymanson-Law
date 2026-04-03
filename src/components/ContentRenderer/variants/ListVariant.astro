@@ -27,10 +27,14 @@ const viewAllText = `See Complete ${collectionTitle || "List"}`;
 <section id={id} class={`py-6 ${className}`}>
   {
     (title || description) && (
-      <div class="mb-12">
-        {title && <h2 class="text-4xl text-heading font-bold mb-4">{title}</h2>}
+      <div class="mb-5">
+        {title && (
+          <h2 class="text-sm font-medium tracking-[0.32em] text-white/70 uppercase">
+            {title}
+          </h2>
+        )}
         {description && (
-          <p class="text-lg text-text max-w-3xl">{description}</p>
+          <p class="max-w-3xl text-sm leading-6 opacity-80">{description}</p>
         )}
       </div>
     )
@@ -38,36 +42,18 @@ const viewAllText = `See Complete ${collectionTitle || "List"}`;
 
   {
     items.length > 0 && (
-      <nav class="flex flex-wrap gap-2 list-none">
+      <nav class="flex flex-col items-start gap-2 list-none">
         {items.map((item) => (
-            <Button href={item.url} className="text-bg" variant="link">
-              {item.title}
+            <Button
+              href={item.url}
+              className="font-normal text-[inherit] leading-[inherit] no-underline hover:text-[inherit] hover:no-underline [font-family:var(--font-plus-jakarta)] [font-optical-sizing:auto]"
+              variant="link"
+            >
+              {item.displayValue ?? item.title}
             </Button>
         ))}
       </nav>
     )
   }
 
-  {
-    shouldShowCollectionCTA(collectionUrl, items.length) && (
-      <div class="mt-12">
-        <Button href={collectionUrl} variant="tertiary">
-          {viewAllText}
-          <svg
-            class="ml-2 w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-        </Button>
-      </div>
-    )
-  }
 </section>

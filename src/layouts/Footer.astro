@@ -11,29 +11,8 @@ import ContentRenderer from "@/components/ContentRenderer/ContentRenderer.astro"
 import PhoneNumberButton from "@/components/PhoneNumberButton.astro";
 import FooterLogo from "@/assets/logo-hymanson-transparent-white.png";
 import { siteData } from "@/content/siteData";
-import { getCollectionMeta, prepareCollectionEntries } from "@/utils/collections";
-import { query, sortByOrder } from "@/utils/query";
+import { query, relatedRoots, sortByOrder } from "@/utils/query";
 import PreferencesLayout from "./PreferencesLayout.astro";
-
-const legalEntries = await query("legal").all();
-const practiceEntries = await query("areas-of-practice").orderBy(sortByOrder()).all();
-const servedLocationEntries = await query("where-we-serve").orderBy(sortByOrder()).all();
-
-const legalLinks = await prepareCollectionEntries(
-  legalEntries,
-  "legal",
-  getCollectionMeta("legal"),
-);
-const practiceLinks = await prepareCollectionEntries(
-  practiceEntries,
-  "areas-of-practice",
-  getCollectionMeta("areas-of-practice"),
-);
-const servedLocationLinks = await prepareCollectionEntries(
-  servedLocationEntries,
-  "where-we-serve",
-  getCollectionMeta("where-we-serve"),
-);
 ---
 
 <footer class="mt-auto bg-[linear-gradient(135deg,#020b16_0%,#08335d_100%)] text-white">
@@ -51,14 +30,13 @@ const servedLocationLinks = await prepareCollectionEntries(
             width={132}
             height={132}
             format="png"
-            class="h-24 w-24 object-contain sm:h-28 sm:w-28"
+            class="h-24 w-24 object-contain sm:h-28 sm:w-28 lg:h-32 lg:w-32"
           />
         </a>
-
-        <p class="mt-6 max-w-xs text-base leading-8 text-white/86 sm:text-[1.0625rem]">
-          {siteData.footer.description}
+        <p class="mb-6">
+          {siteData.description}
         </p>
-        <div class="mt-8">
+        <div class="mt-6">
           <PhoneNumberButton
             desktopMode="link"
             iconSize="md"
@@ -68,42 +46,35 @@ const servedLocationLinks = await prepareCollectionEntries(
         </div>
       </div>
 
-      <div>
-        <p class="text-xs font-medium tracking-[0.32em] text-white/70 uppercase">
-          Menu
-        </p>
-        <nav aria-label="Footer menu" class="mt-5">
-          <ul class="space-y-4 text-lg leading-8 text-white/92">
-            {siteData.footer.menuLinks.map((link) => (
-              <li>
-                <a class="transition-colors duration-200 hover:text-white" href={link.href}>
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-
-      <div>
-        <p class="text-xs font-medium tracking-[0.32em] text-white/70 uppercase">
-          Areas of Practice
-        </p>
+      <div class="text-lg leading-8 text-white/92">
         <ContentRenderer
-          items={practiceLinks}
+          query={relatedRoots("menu-items", "menu", "footer-menu")}
           variant="ListVariant"
-          className="footer-list-variant py-0"
+          title="Menu"
+          description=""
+          collectionUrl={undefined}
+          className="py-0"
         />
       </div>
 
-      <div>
-        <p class="text-xs font-medium tracking-[0.32em] text-white/70 uppercase">
-          Where We Serve
-        </p>
+      <div class="text-lg leading-8 text-white/92">
         <ContentRenderer
-          items={servedLocationLinks}
+          query={query("areas-of-practice").orderBy(sortByOrder())}
           variant="ListVariant"
-          className="footer-list-variant py-0"
+          title="Areas of Practice"
+          description=""
+          collectionUrl={undefined}
+          className="py-0"
+        />
+      </div>
+
+      <div class="text-lg leading-8 text-white/92">
+        <ContentRenderer
+          query={query("where-we-serve").orderBy(sortByOrder())}
+          variant="ListVariant"
+          title="Where We Serve"
+          description=""
+          className="py-0"
         />
       </div>
     </div>
@@ -111,22 +82,18 @@ const servedLocationLinks = await prepareCollectionEntries(
     <div class="py-7 text-sm text-white/78">
       <PreferencesLayout className="justify-start md:justify-center" />
 
-      <nav aria-label="Mobile legal footer links" class="mt-5 md:hidden">
-        <ul class="flex flex-col items-start gap-3 text-sm leading-6 text-white/78">
-          {legalLinks.map((item) => (
-            <li>
-              <a class="transition-colors duration-200 hover:text-white" href={item.url}>
-                {item.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <ContentRenderer
+        query={query("legal").orderBy(sortByOrder())}
+        variant="ListVariant"
+        title=""
+        description=""
+        className="py-0 md:hidden"
+      />
     </div>
 
-    <div class="border-t py-5 border-white/20">
-      <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-        <p class="text-sm leading-6 text-white/78">
+    <div class="border-t py-1 border-white/20">
+      <div class="flex flex-col gap-5 text-sm leading-6 text-white/78 lg:flex-row lg:items-center lg:justify-between">
+        <p>
           &copy; {new Date().getFullYear()} {siteData.legalName}. All Rights Reserved. Built by{" "}
           <a
             href="https://griffinswebservices.com"
@@ -138,42 +105,14 @@ const servedLocationLinks = await prepareCollectionEntries(
           </a>
         </p>
 
-        <nav aria-label="Legal footer links">
-          <ul class="hidden md:flex flex-wrap items-center gap-x-8 gap-y-3 text-sm leading-6 text-white/78">
-            {legalLinks.map((item) => (
-              <li>
-                <a class="transition-colors duration-200 hover:text-white" href={item.url}>
-                  {item.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <ContentRenderer
+          query={query("legal").orderBy(sortByOrder())}
+          variant="ListVariant"
+          title=""
+          description=""
+          className="hidden py-0 md:block [&_nav]:flex-row [&_nav]:flex-wrap [&_nav]:items-center [&_nav]:gap-x-8 [&_nav]:gap-y-3"
+        />
       </div>
     </div>
   </div>
 </footer>
-
-<style is:global>
-  .footer-list-variant nav {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-
-  .footer-list-variant .link-base {
-    color: rgb(255 255 255 / 0.92);
-    font-family: var(--font-plus-jakarta);
-    font-optical-sizing: auto;
-    font-size: 1.125rem;
-    line-height: 2rem;
-    font-weight: 400;
-    text-decoration: none;
-  }
-
-  .footer-list-variant .link-base:hover {
-    color: white;
-    text-decoration: none;
-  }
-</style>

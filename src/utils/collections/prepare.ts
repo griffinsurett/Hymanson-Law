@@ -22,6 +22,14 @@ export interface PreparedFields {
 
 export type PreparedItem = BaseData & PreparedFields;
 
+function formatSlugLabel(slug: string): string {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(" ");
+}
+
 /** Normalize parent reference to first parent slug (handles array or string) */
 function getFirstParentSlug(parent: string | string[] | undefined): string | undefined {
   if (!parent) return undefined;
@@ -73,6 +81,10 @@ export async function prepareEntry<T extends CollectionKey>(
       const useRootPath = shouldItemUseRootPath(entry, meta);
       itemUrl = useRootPath ? `/${identifier}` : `/${collection}/${identifier}`;
     }
+  }
+
+  if (!displayValue && collection === "where-we-serve" && identifier) {
+    displayValue = formatSlugLabel(identifier);
   }
 
   // Store raw body for variants that need it - don't render Content here

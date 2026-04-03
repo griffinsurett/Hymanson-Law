@@ -10,9 +10,9 @@ const { items = [], className = "", id } = Astro.props as Props;
 <section id={id} class={className}>
   {
     items.length > 0 && (
-      <ul class="space-y-4 list-none">
+      <ul class="flex flex-wrap items-center gap-x-8 gap-y-4 list-none p-0">
         {items.map((item) => (
-          <ChecklistItem title={item.title} url={item.url} />
+          <ChecklistItem title={item.displayValue ?? item.title} url={item.url} />
         ))}
       </ul>
     )

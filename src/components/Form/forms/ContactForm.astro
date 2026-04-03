@@ -4,9 +4,9 @@
  * Contact Form - Astro Version
  * Pure HTML with optional React enhancement via client:idle
  */
-import Button from "@/components/Button/Button";
 import FormWrapper from "@/components/Form/FormWrapper";
 import Input from "@/components/Form/inputs/Input";
+import Select from "@/components/Form/inputs/Select";
 import Checkbox from "@/components/Form/inputs/Checkbox";
 import Textarea from "@/components/Form/inputs/Textarea";
 
@@ -26,11 +26,32 @@ const handleSubmit = async () => {
     "Contact form is not configured. Set PUBLIC_FORMSPREE_CONTACT_ID or PUBLIC_FORMSPREE_ID."
   );
 };
+
+const practiceAreaOptions = [
+  { value: "estate-planning", label: "Estate Planning" },
+  { value: "business-law", label: "Business Law" },
+  { value: "commercial-litigation", label: "Commercial Litigation" },
+  { value: "real-estate-transactions", label: "Real Estate Transactions" },
+  {
+    value: "trust-estate-administration",
+    label: "Trust & Estate Administration",
+  },
+  { value: "general-inquiry", label: "General Inquiry" },
+];
+
+const fieldLabelClassName =
+  "mb-3 block text-xs font-semibold uppercase tracking-[0.08em] text-heading/70";
+
+const fieldInputClassName =
+  "w-full rounded-2xl border border-primary/10 bg-surface px-5 py-4 text-lg text-heading placeholder:text-text/45 focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/15";
+
+const fieldTextareaClassName =
+  "w-full rounded-2xl border border-primary/10 bg-surface px-5 py-4 text-lg text-heading placeholder:text-text/45 focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/15 resize-y";
 ---
 
 <div class={className}>
-  {title && <h2 class="text-3xl font-bold mb-3">{title}</h2>}
-  {description && <p class="text-text mb-8">{description}</p>}
+  {title && <h2 class="mb-3 text-3xl font-bold text-heading">{title}</h2>}
+  {description && <p class="mb-8 text-text">{description}</p>}
 
   <FormWrapper
     client:idle
@@ -44,91 +65,78 @@ const handleSubmit = async () => {
   >
     <input type="hidden" name="formName" value="Greastro Contact Form" />
 
-    <div class="flex flex-col lg:flex-row justify-between gap-2 mb-4">
+    <div class="grid gap-4 sm:grid-cols-2">
       <Input
-        name="firstName"
-        label="First Name"
+        name="fullName"
+        label="Full Name"
         type="text"
         required={true}
         minLength={2}
-        placeholder="First Name"
+        placeholder="John Doe"
         containerClassName="mb-0 flex-1"
-        inputClassName="w-full px-4 py-3 bg-surface border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-MainDark"
+        labelClassName={fieldLabelClassName}
+        inputClassName={fieldInputClassName}
       />
 
       <Input
-        name="lastName"
-        label="Last Name"
-        type="text"
+        name="email"
+        label="Email Address"
+        type="email"
         required={true}
-        minLength={2}
-        placeholder="Last Name"
+        placeholder="john@example.com"
         containerClassName="mb-0 flex-1"
-        inputClassName="w-full px-4 py-3 bg-surface border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-MainDark"
+        labelClassName={fieldLabelClassName}
+        inputClassName={fieldInputClassName}
       />
     </div>
 
-    <Input
-      name="email"
-      label="Email"
-      type="email"
+    <Select
+      name="practiceArea"
+      label="Practice Area Of Interest"
       required={true}
-      placeholder="me@website.com"
+      options={practiceAreaOptions}
+      placeholder="Select a practice area"
+      defaultValue=""
       containerClassName="mb-4"
-      inputClassName="w-full px-4 py-3 bg-surface border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-MainDark"
-    />
-
-    <Input
-      name="phone"
-      label="Phone Number"
-      type="tel"
-      required={true}
-      pattern="[0-9]{10,}"
-      title="Please enter at least 10 digits"
-      placeholder="012-345-6789"
-      containerClassName="mb-4"
-      inputClassName="w-full px-4 py-3 bg-surface border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-MainDark"
-    />
-
-    <Input
-      name="company"
-      label="Company Name"
-      type="text"
-      placeholder="LLC or whatever you trade as"
-      containerClassName="mb-4"
-      inputClassName="w-full px-4 py-3 bg-surface border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-MainDark"
+      labelClassName={fieldLabelClassName}
+      selectClassName={fieldInputClassName}
     />
 
     <Textarea
       name="message"
-      label="Your Message"
+      label="Brief Message"
       required={true}
       minLength={10}
-      placeholder="Write your message here..."
-      rows={5}
+      placeholder="Tell us how we can help..."
+      rows={6}
       containerClassName="mb-4"
-      textareaClassName="w-full px-4 py-3 bg-surface border-0 rounded-md focus:outline-none focus:ring-2 focus:ring-MainDark resize-vertical"
+      labelClassName={fieldLabelClassName}
+      textareaClassName={fieldTextareaClassName}
     />
 
     <Checkbox
       name="privacy"
       required
-      containerClassName="mb-6"
-      checkboxClassName="w-4 h-4 text-MainDark border-surface rounded"
+      containerClassName="mb-6 mt-5"
+      labelClassName="flex items-start gap-3 cursor-pointer"
+      checkboxClassName="mt-1 h-4 w-4 rounded border-primary/20 text-primary focus:ring-primary/20"
     >
       I have read and agree to the{" "}
-      <Button
-        variant="link"
+      <a
         href="/privacy-policy"
         target="_blank"
         rel="noopener noreferrer"
+        class="font-semibold text-primary underline underline-offset-4"
       >
         Privacy Policy
-      </Button>
+      </a>
     </Checkbox>
 
-    <Button variant="primary" type="submit" className="w-full mx-auto">
-      Submit Form
-    </Button>
+    <button
+      type="submit"
+      class="inline-flex min-h-16 w-full items-center justify-center rounded-2xl bg-[linear-gradient(90deg,var(--color-heading)_0%,var(--color-primary)_100%)] px-6 py-4 font-plus-jakarta text-lg font-semibold text-white shadow-[0_16px_30px_rgba(0,57,107,0.2)] transition-transform duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary/25"
+    >
+      Submit Request
+    </button>
   </FormWrapper>
 </div>

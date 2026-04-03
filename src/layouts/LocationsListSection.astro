@@ -11,6 +11,7 @@ export interface Props {
   description?: string;
   cardTitle?: string;
   cardDescription?: string;
+  showStates?: boolean;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   description = "Hymanson Law advises clients through estate planning, trust and estate administration, real estate transactions, commercial matters, and litigation with the steady judgment, responsiveness, and discretion complex matters require.",
   cardTitle = "Unwavering Empathy",
   cardDescription = "We believe that the best legal strategies are born from listening. Our partners spend as much time understanding your personal story as they do studying case law. This is the Hymanson difference.",
+  showStates = true,
 } = Astro.props;
 ---
 
@@ -55,11 +57,15 @@ const {
         {description}
       </p>
 
-      <ContentRenderer
-        query={query("where-we-serve").orderBy(sortByOrder())}
-        variant="ChecklistVariant"
-        className="mt-8"
-      />
+      {
+        showStates && (
+          <ContentRenderer
+            query={query("where-we-serve").orderBy(sortByOrder())}
+            variant="ChecklistVariant"
+            className="mt-8"
+          />
+        )
+      }
     </div>
   </div>
 </section>

@@ -107,14 +107,6 @@ export const collections = {
       }),
   }),
 
-  "services": defineCollection({
-    schema: ({ image }) =>
-      baseSchema({ image }).extend({
-        price: z.string().optional(),
-        features: z.array(z.string()).default([]),
-      }),
-  }),
-
   "areas-of-practice": defineCollection({
     loader: glob({
       base: "./src/content/areas-of-practice",
@@ -135,16 +127,6 @@ export const collections = {
         role: z.string(),
         company: z.string().optional(),
         rating: z.number().min(1).max(5).default(5),
-      }),
-  }),
-
-  "projects": defineCollection({
-    schema: ({ image }) =>
-      baseSchema({ image }).extend({
-        client: z.string(),
-        projectUrl: z.string().url().optional(),
-        technologies: z.array(z.string()).default([]),
-        category: z.string(),
       }),
   }),
 

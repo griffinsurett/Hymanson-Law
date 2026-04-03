@@ -16,7 +16,8 @@
  * Generates absolute URLs for social sharing.
  */
 
-import defaultOGImage from "@/assets/hymanson-law-firm-logo-las-vegas.png";
+import defaultSocialImage from "@/assets/buildings.jpg";
+import publisherLogoImage from "@/assets/hymanson-law-firm-logo-las-vegas.png";
 import { siteData } from "@/content/siteData";
 import { getImageUrl } from "@/utils/images";
 import type { ImageInput, SEOData } from "@/content/schema";
@@ -44,7 +45,7 @@ const {
 // Base values from props
 const baseTitle = title || "Page";
 const baseDescription = description || siteData.description;
-const baseImageUrl = getImageUrl(image, defaultOGImage.src);
+const baseImageUrl = getImageUrl(image, defaultSocialImage.src);
 
 // Meta tag values (with SEO overrides)
 const finalMetaTitle = seo?.metaTitle || `${baseTitle} | ${siteData.title}`;
@@ -106,9 +107,9 @@ const structuredData = {
     "url": siteData.url,
     "logo": {
       "@type": "ImageObject",
-      "url": makeAbsolute(defaultOGImage.src),
-      "width": defaultOGImage.width,
-      "height": defaultOGImage.height
+      "url": makeAbsolute(publisherLogoImage.src),
+      "width": publisherLogoImage.width,
+      "height": publisherLogoImage.height
     }
   },
   "author": {

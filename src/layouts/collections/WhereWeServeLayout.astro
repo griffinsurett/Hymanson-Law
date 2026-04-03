@@ -1,0 +1,68 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import FrontPageHero from "@/layouts/FrontPageHero.astro";
+import LocationsListSection from "@/layouts/LocationsListSection.astro";
+import AreasOfPracticeSection from "@/layouts/AreasOfPracticeSection.astro";
+import CTASection from "@/layouts/CTASection.astro";
+import FAQSection from "@/layouts/FAQSection.astro";
+import BuildingsHeroImage from "@/assets/buildings.jpg";
+import { ctaData } from "@/content/siteData";
+import type { CollectionLayoutProps } from "./types";
+
+const {
+  entry,
+  Content,
+  seoProps = {},
+} = Astro.props as CollectionLayoutProps;
+
+const data = entry?.data || {};
+const stateName =
+  entry?.slug
+    ?.split("-")
+    .filter(Boolean)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(" ") || "Our Clients";
+const heroEyebrow =
+  typeof data.title === "string" && data.title.trim().length > 0
+    ? data.title.trim()
+    : stateName;
+const heroTitle =
+  typeof data.heading === "string" && data.heading.trim().length > 0
+    ? data.heading.trim()
+    : "Trusted Counsel for Families, Businesses, and Long-Term Planning";
+const heroDescription =
+  data.description ||
+  `We successfully guide clients in ${stateName} in their estate planning, wealth and succession planning, estate and trust administration and litigation, real estate, commercial transactions, and commercial litigation needs.`;
+const locationsDescription = `Hymanson Law advises clients in ${stateName} through estate planning, trust and estate administration, real estate transactions, commercial matters, and litigation with the steady judgment, responsiveness, and discretion complex matters require.`;
+---
+
+<BaseLayout {...seoProps}>
+  <FrontPageHero
+    slot="hero"
+    eyebrow={heroEyebrow}
+    title={heroTitle}
+    image={data.bannerImage || BuildingsHeroImage}
+    description={heroDescription}
+    primaryCTA={{
+      text: ctaData.text,
+      link: ctaData.link,
+    }}
+  />
+
+  <main class="flex-1">
+    <div class="mx-auto w-full px-6 sm:px-10 md:px-15 lg:px-20">
+      {Content && <Content />}
+
+      <LocationsListSection
+        description={locationsDescription}
+        showStates={false}
+      />
+
+      <AreasOfPracticeSection />
+
+      <CTASection />
+
+      <FAQSection />
+    </div>
+  </main>
+</BaseLayout>

@@ -1,14 +1,15 @@
 ---
 title: "Where We Serve"
 description: "Trusted estate planning and litigation counsel for clients across Utah, New Jersey, and New York."
-hasPage: true
+hasPage: false
 itemsHasPage: true
+itemsRootPath: true
+itemsLayout: "@/layouts/collections/WhereWeServeLayout.astro"
 itemsAddToMenu:
   - menu: "main-menu"
 addToMenu:
   - menu: "main-menu"
     order: 2
-  - menu: "footer-menu"
 ---
 import ContentRenderer from "@/components/ContentRenderer/ContentRenderer.astro";
 import { query, sortByOrder } from "@/utils/query";
