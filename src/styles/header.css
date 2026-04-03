@@ -23,10 +23,6 @@
     @apply hidden;
   }
 
-  .hero-frame .site-header.is-stuck .header-phone-desktop {
-    @apply md:hidden;
-  }
-
   .hero-frame .site-header.is-stuck .header-sticky-cta {
     @apply md:flex;
   }
