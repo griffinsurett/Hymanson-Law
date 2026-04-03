@@ -1,15 +1,14 @@
 ---
 import Button from "@/components/Button/Button";
-import type { ContactLink } from "@/utils/contactLinks";
+import PhoneNumberButton from "@/components/PhoneNumberButton.astro";
+import { sharedPhoneNumberButtonProps } from "@/components/phoneNumberButtonConfig";
 
 interface Props {
-  phoneContact?: ContactLink;
   inquiryHref?: string;
   mobile?: boolean;
 }
 
 const {
-  phoneContact,
   inquiryHref = "#practice-inquiry",
   mobile = false,
 } = Astro.props as Props;
@@ -32,20 +31,13 @@ const cardClass =
           Reach out about this practice area and we will follow up with prompt, focused guidance.
         </p>
 
-        {
-          phoneContact?.url && (
-            <div class="mt-5">
-              <Button
-                href={phoneContact.url}
-                variant="phone-number"
-                leftIcon={phoneContact.icon ?? "lu:phone"}
-                size="md"
-              >
-                {phoneContact.displayValue}
-              </Button>
-            </div>
-          )
-        }
+        <div class="mt-5">
+          <PhoneNumberButton
+            {...sharedPhoneNumberButtonProps}
+            className="transition-colors duration-200 hover:text-primary"
+            textClass="text-base leading-none md:text-lg"
+          />
+        </div>
 
         <div class="mt-5">
           <Button
@@ -73,20 +65,13 @@ const cardClass =
           Reach out about this practice area and we will follow up with prompt, focused guidance.
         </p>
 
-        {
-          phoneContact?.url && (
-            <div class="mt-5">
-              <Button
-                href={phoneContact.url}
-                variant="phone-number"
-                leftIcon={phoneContact.icon ?? "lu:phone"}
-                size="md"
-              >
-                {phoneContact.displayValue}
-              </Button>
-            </div>
-          )
-        }
+        <div class="mt-5">
+          <PhoneNumberButton
+            {...sharedPhoneNumberButtonProps}
+            className="transition-colors duration-200 hover:text-primary"
+            textClass="text-base leading-none md:text-lg"
+          />
+        </div>
 
         <div class="mt-5">
           <Button
