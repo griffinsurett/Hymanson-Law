@@ -1,6 +1,7 @@
 // src/components/LoopTemplates/Accordion.tsx
 import { useState, useEffect, useRef, type ReactNode } from "react";
 import AccordionItem from "@/components/LoopComponents/AccordionItem";
+import { staggeredAnimationProps } from "@/integrations/scroll-animations";
 
 interface AccordionItemData {
   slug?: string;
@@ -84,6 +85,10 @@ export default function Accordion({
             id={itemId}
             title={item.title}
             description={item.description}
+            animationProps={staggeredAnimationProps("fade-in-up", index, {
+              once: true,
+              staggerDelay: 100,
+            })}
             isExpanded={expandedItems.has(itemId)}
             onToggle={() => toggleItem(itemId)}
             headerSlot={

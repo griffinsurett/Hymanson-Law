@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import ContactForm from "@/components/Form/forms/ContactForm.astro";
 import Icon from "@/components/Icon";
 import BuildingsHeroImage from "@/assets/buildings.jpg";
+import { animationProps } from "@/integrations/scroll-animations";
 import {
   getContactLinks,
   type ContactLink,
@@ -43,10 +44,17 @@ const featuredPhoneValue =
   featuredPhone?.title ??
   "";
 const featuredPhoneRaw = featuredPhone?.description ?? featuredPhoneValue;
+
+const sectionAnimation = animationProps("fade-in-scale", {
+  once: true,
+});
 ---
 
 <section id={id} class={`py-16 w-full ${className}`.trim()}>
-  <div class="relative overflow-hidden rounded-[2.5rem] px-6 py-8 sm:px-8 sm:py-10 lg:px-14 lg:py-14">
+  <div
+    {...sectionAnimation}
+    class="relative overflow-hidden rounded-[2.5rem] px-6 py-8 sm:px-8 sm:py-10 lg:px-14 lg:py-14"
+  >
     <Image
       src={BuildingsHeroImage}
       alt=""

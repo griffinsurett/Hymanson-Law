@@ -1,6 +1,7 @@
 ---
 import ContentRenderer from "@/components/ContentRenderer/ContentRenderer.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
+import { animationProps } from "@/integrations/scroll-animations";
 import { getCollectionMeta } from "@/utils/collections";
 import { query, sortByOrder } from "@/utils/query";
 
@@ -12,16 +13,22 @@ export interface Props {
 const { className = "", title } = Astro.props as Props;
 const faqMeta = getCollectionMeta("faq");
 const sectionTitle = title ?? faqMeta.title ?? "Frequently Asked Questions";
+
+const headingAnimation = animationProps("fade-in-up", {
+  once: true,
+});
 ---
 
 <section class={`py-24 lg:py-32 ${className}`.trim()}>
   <div class="w-full">
-    <SectionHeading
-      as="h2"
-      align="center"
-      title={sectionTitle}
-      titleClass="font-newsreader text-[3rem] leading-[0.94] tracking-[-0.04em] text-primary md:text-[4rem] lg:text-[4.75rem]"
-    />
+    <div {...headingAnimation}>
+      <SectionHeading
+        as="h2"
+        align="center"
+        title={sectionTitle}
+        titleClass="font-newsreader text-[3rem] leading-[0.94] tracking-[-0.04em] text-primary md:text-[4rem] lg:text-[4.75rem]"
+      />
+    </div>
 
     <ContentRenderer
       query={query("faq").orderBy(sortByOrder())}

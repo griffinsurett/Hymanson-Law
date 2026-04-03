@@ -1,6 +1,7 @@
 ---
 import SectionHeading from "@/components/SectionHeading.astro";
 import PracticeEditorialRow from "@/components/LoopComponents/PracticeEditorialRow.astro";
+import { animationProps, staggeredAnimationProps } from "@/integrations/scroll-animations";
 import { getCollectionMeta, prepareCollectionEntries } from "@/utils/collections";
 import { query, sortByOrder } from "@/utils/query";
 
@@ -28,35 +29,46 @@ const entries = await query("areas-of-practice")
 
 const collectionMeta = getCollectionMeta("areas-of-practice");
 const practices = await prepareCollectionEntries(entries, "areas-of-practice", collectionMeta);
+
+const headingAnimation = animationProps("fade-in-up", {
+  once: true,
+});
 ---
 <section class={`py-24 lg:py-32 ${className}`.trim()}>
   <div class="w-full">
     <div>
-    <SectionHeading
-      as="h2"
-      align="left"
-      description={description}
-      className="mx-auto max-w-4xl md:text-center"
-      titleClass="font-newsreader text-[3.4rem] leading-[0.92] tracking-[-0.04em] text-heading md:text-[4.75rem] lg:text-[5.5rem]"
-      descriptionClass="mt-5 max-w-3xl text-lg leading-relaxed text-text md:mx-auto md:text-[1.375rem]"
-    >
-      <Fragment slot="title">
-        {leadingWords && <span class="text-heading">{leadingWords} </span>}
-        <span class="text-primary">{accentWord}</span>
-      </Fragment>
-    </SectionHeading>
+      <div {...headingAnimation}>
+        <SectionHeading
+          as="h2"
+          align="left"
+          description={description}
+          className="mx-auto max-w-4xl md:text-center"
+          titleClass="font-newsreader text-[3.4rem] leading-[0.92] tracking-[-0.04em] text-heading md:text-[4.75rem] lg:text-[5.5rem]"
+          descriptionClass="mt-5 max-w-3xl text-lg leading-relaxed text-text md:mx-auto md:text-[1.375rem]"
+        >
+          <Fragment slot="title">
+            {leadingWords && <span class="text-heading">{leadingWords} </span>}
+            <span class="text-primary">{accentWord}</span>
+          </Fragment>
+        </SectionHeading>
+      </div>
 
-    <div class="mt-14 lg:mt-20">
-      <div class="relative">
-        <ul class="border-t border-heading/12">
-          {practices.map((practice) => (
-            <PracticeEditorialRow
-              title={practice.title}
-              description={practice.description}
-              url={practice.url}
-            />
-          ))}
-        </ul>
+      <div class="mt-14 lg:mt-20">
+        <div class="relative">
+          <ul class="border-t border-heading/12">
+            {practices.map((practice, index) => (
+              <PracticeEditorialRow
+                title={practice.title}
+                description={practice.description}
+                url={practice.url}
+                animation={staggeredAnimationProps("fade-in-up", index, {
+                  once: true,
+                  staggerDelay: 100,
+                })}
+              />
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   </div>

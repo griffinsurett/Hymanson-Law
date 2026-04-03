@@ -5,12 +5,13 @@ export interface Props {
   title: string;
   description?: string;
   url?: string;
+  animation?: Record<string, any>;
 }
 
-const { title, description, url } = Astro.props;
+const { title, description, url, animation = {} } = Astro.props;
 ---
 
-<li class="border-b border-heading/12">
+<li {...animation} class="border-b border-heading/12">
   {
     url ? (
       <a

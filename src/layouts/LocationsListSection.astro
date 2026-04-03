@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import ContentRenderer from "@/components/ContentRenderer/ContentRenderer.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import CourtroomImage from "@/assets/courtroom.jpg";
+import { animationProps } from "@/integrations/scroll-animations";
 import { query, sortByOrder } from "@/utils/query";
 
 export interface Props {
@@ -22,11 +23,23 @@ const {
   cardDescription = "We believe that the best legal strategies are born from listening. Our partners spend as much time understanding your personal story as they do studying case law. This is the Hymanson difference.",
   showStates = true,
 } = Astro.props;
+
+const mediaAnimation = animationProps("fade-in-right", {
+  once: true,
+});
+
+const contentAnimation = animationProps("fade-in-up", {
+  once: true,
+  delay: 120,
+});
 ---
 
 <section class={`py-20 lg:py-28 ${className}`.trim()}>
   <div class="grid w-full gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-16">
-    <div class="relative min-h-[26rem] lg:min-h-[28rem]">
+    <div
+      {...mediaAnimation}
+      class="relative min-h-[26rem] lg:min-h-[28rem]"
+    >
       <div class="boutique-legacy-media absolute inset-y-0 left-0 w-[56%] overflow-hidden rounded-[2rem]">
         <Image
           src={CourtroomImage}
@@ -49,7 +62,7 @@ const {
       </div>
     </div>
 
-    <div class="max-w-2xl">
+    <div {...contentAnimation} class="max-w-2xl">
       <h2 class="font-newsreader text-[3rem] leading-[0.96] text-heading md:text-[4rem]">
         {title}
       </h2>

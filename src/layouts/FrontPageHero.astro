@@ -25,6 +25,7 @@ import { sharedPhoneNumberButtonProps } from "@/components/phoneNumberButtonConf
 import SectionHeading from "@/components/SectionHeading.astro";
 import BackgroundMedia from "@/components/BackgroundMedia.astro";
 import { ctaData } from "@/content/siteData";
+import { animationProps } from "@/integrations/scroll-animations";
 import { query } from "@/utils/query";
 import DefaultImg from "@/assets/background.svg";
 import JerryHymanson from "@/assets/jerry-hymanson.jpg";
@@ -91,6 +92,20 @@ const backgroundMedia = {
   overlayClass: "bg-gradient-to-b from-black/30 to-black/60",
 };
 
+const headingAnimation = animationProps("fade-in-up", {
+  once: true,
+});
+
+const ctaAnimation = animationProps("fade-in-up", {
+  once: true,
+  delay: 180,
+});
+
+const quoteCardAnimation = animationProps("fade-in-left", {
+  once: true,
+  delay: 280,
+});
+
 ---
 
 <section id={id} class={`relative ${className}`}>
@@ -100,21 +115,23 @@ const backgroundMedia = {
     <div class="hero-image-wash absolute inset-0 z-[1]" aria-hidden="true"></div>
 
     {/* Hero Content */}
-    <div class="relative z-10 flex min-h-screen w-full max-w-xl flex-col justify-center text-left sm:max-w-2xl lg:min-h-0 lg:max-w-3xl lg:px-12 xl:ml-16 xl:px-0">
-      <SectionHeading
-        as="h1"
-        eyebrow={eyebrow}
-        description={description}
-        className="max-w-3xl"
-        descriptionClass="mb-6 max-w-2xl text-lg leading-relaxed text-text md:text-xl"
-      >
-        <Fragment slot="title">
-          <slot name="title">{title}</slot>
-        </Fragment>
-      </SectionHeading>
+    <div class="relative z-10 flex min-h-[80vh] w-full max-w-xl flex-col justify-center text-left sm:max-w-2xl lg:min-h-0 lg:max-w-3xl lg:px-12 xl:ml-16 xl:px-0">
+      <div {...headingAnimation}>
+        <SectionHeading
+          as="h1"
+          eyebrow={eyebrow}
+          description={description}
+          className="max-w-3xl"
+          descriptionClass="mb-6 max-w-[24rem] text-lg leading-relaxed text-text sm:max-w-[28rem] md:max-w-[32rem] md:text-xl"
+        >
+          <Fragment slot="title">
+            <slot name="title">{title}</slot>
+          </Fragment>
+        </SectionHeading>
+      </div>
 
       {/* CTA Buttons */}
-      <div class="flex flex-wrap justify-start gap-4 lg:gap-12">
+      <div {...ctaAnimation} class="flex flex-wrap justify-start gap-4 lg:gap-12">
         {
           primaryCTA && (
             <Button
@@ -133,12 +150,19 @@ const backgroundMedia = {
       </div>
     </div>
 
-    <div class="pointer-events-none relative z-10 mt-8 w-full max-w-[34rem] self-center lg:absolute lg:bottom-4 lg:right-4 lg:mt-0">
-      <HeroQuoteCard
-        className="pointer-events-auto"
-        portraitSrc={JerryHymanson.src}
-        portraitAlt="Jerry Hymanson"
-      />
+    <div
+      class="pointer-events-none relative z-10 mt-8 w-full max-w-[34rem] self-center lg:absolute lg:bottom-4 lg:right-4 lg:mt-0"
+    >
+      <div
+        {...quoteCardAnimation}
+        class="hero-quote-reveal pointer-events-auto"
+      >
+        <HeroQuoteCard
+          className="pointer-events-auto"
+          portraitSrc={JerryHymanson.src}
+          portraitAlt="Jerry Hymanson"
+        />
+      </div>
       <ContentRenderer
         query={query("stats")}
         variant="StatsVariant"
@@ -151,9 +175,45 @@ const backgroundMedia = {
   <slot />
 </section>
 
+<script>
+  const root = document.documentElement;
+
+  if (!root.dataset.heroQuoteReady) {
+    const unlockQuote = () => {
+      root.dataset.heroQuoteReady = "true";
+      window.removeEventListener("scroll", onFirstDownScroll);
+    };
+
+    let lastScrollY = window.scrollY;
+
+    const onFirstDownScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > 0 && currentScrollY > lastScrollY) {
+        unlockQuote();
+        return;
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    if (window.scrollY > 0) {
+      unlockQuote();
+    } else {
+      window.addEventListener("scroll", onFirstDownScroll, { passive: true });
+    }
+  }
+</script>
+
 <style>
   h1,
   p {
     text-shadow: none;
+  }
+
+  :root:not([data-hero-quote-ready="true"]) .hero-quote-reveal {
+    opacity: 0 !important;
+    transform: translateX(-30px) !important;
+    pointer-events: none;
   }
 </style>

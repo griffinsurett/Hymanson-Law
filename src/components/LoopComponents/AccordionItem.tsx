@@ -7,6 +7,7 @@ export interface AccordionItemProps {
   description?: string;
   children?: ReactNode;
   className?: string;
+  animationProps?: Record<string, any>;
   isExpanded: boolean;
   onToggle: () => void;
   headerClassName?: string;
@@ -19,6 +20,7 @@ export default function AccordionItem({
   id,
   title,
   className = "",
+  animationProps = {},
   children,
   isExpanded,
   onToggle,
@@ -28,7 +30,7 @@ export default function AccordionItem({
   headerSlot,
 }: AccordionItemProps) {
   return (
-    <div className={`border-b border-heading/12 ${className}`}>
+    <div {...animationProps} className={`border-b border-heading/12 ${className}`}>
       <button
         type="button"
         className={`grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-6 py-6 text-left transition-colors duration-200 md:gap-8 md:py-8 ${headerClassName}`}
