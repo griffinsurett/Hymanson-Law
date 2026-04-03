@@ -30,6 +30,7 @@ export default function MobileMenuItem({
 }: MobileMenuItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const hasChildren = children.length > 0;
+  const nestedOffset = level > 0 ? level * 16 : 0;
 
   // Parent with children - always show expand/collapse button
   if (hasChildren) {
@@ -39,7 +40,10 @@ export default function MobileMenuItem({
 
     return (
       <li>
-        <div className="flex items-center justify-between gap-2 rounded-xl transition-colors">
+        <div
+          className="flex items-center justify-between gap-2 rounded-xl transition-colors"
+          style={{ paddingLeft: `${nestedOffset}px` }}
+        >
           {hasUrl ? (
             <a
               href={url}
@@ -115,6 +119,7 @@ export default function MobileMenuItem({
         target={openInNewTab ? "_blank" : undefined}
         rel={openInNewTab ? "noopener noreferrer" : undefined}
         className="block rounded-xl px-4 py-3 text-base text-text transition-colors hover:bg-white/10 hover:text-primary [font-family:var(--font-plus-jakarta)]"
+        style={{ paddingLeft: `${nestedOffset + 16}px` }}
       >
         {title}
       </a>
