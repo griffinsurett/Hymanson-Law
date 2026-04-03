@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import FrontPageHero from "@/layouts/FrontPageHero.astro";
 import LocationsListSection from "@/layouts/LocationsListSection.astro";
 import AreasOfPracticeSection from "@/layouts/AreasOfPracticeSection.astro";
-import CTASection from "@/layouts/CTASection.astro";
+import ContactFormSection from "@/layouts/ContactFormSection.astro";
 import FAQSection from "@/layouts/FAQSection.astro";
 import BuildingsHeroImage from "@/assets/buildings.jpg";
 import { ctaData } from "@/content/siteData";
@@ -60,7 +60,11 @@ const locationsDescription = `Hymanson Law advises clients in ${stateName} throu
 
       <AreasOfPracticeSection />
 
-      <CTASection />
+      <ContactFormSection
+        title="Begin a Professional Partnership"
+        description="Schedule a confidential consultation with our principal attorneys to discuss your legal objectives."
+        hiddenFields={{ currentSlug: entry?.slug ?? "" }}
+      />
 
       <FAQSection />
     </div>

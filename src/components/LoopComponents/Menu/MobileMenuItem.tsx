@@ -30,7 +30,6 @@ export default function MobileMenuItem({
 }: MobileMenuItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const hasChildren = children.length > 0;
-  const indent = level * 16; // 16px per level
 
   // Parent with children - always show expand/collapse button
   if (hasChildren) {
@@ -38,27 +37,16 @@ export default function MobileMenuItem({
     // If parent has no URL (hasPage: false), only show expand button
     const hasUrl = Boolean(url);
 
-    const handleParentClick = () => {
-      if (hasUrl) {
-        onNavigate();
-      } else {
-        setIsExpanded(!isExpanded);
-      }
-    };
-
     return (
       <li>
-        <div
-          className="flex items-center justify-between rounded-xl transition-colors"
-          style={{ paddingLeft: `${indent + 16}px` }}
-        >
+        <div className="flex items-center justify-between gap-2 rounded-xl transition-colors">
           {hasUrl ? (
             <a
               href={url}
               onClick={onNavigate}
               target={openInNewTab ? "_blank" : undefined}
               rel={openInNewTab ? "noopener noreferrer" : undefined}
-              className="flex-1 rounded-xl px-3 py-3 text-base font-medium text-heading transition-colors hover:bg-white/10 hover:text-primary"
+              className="flex-1 rounded-xl px-4 py-3 text-base font-normal text-text transition-colors hover:bg-white/10 hover:text-primary [font-family:var(--font-plus-jakarta)]"
             >
               {title}
             </a>
@@ -66,7 +54,7 @@ export default function MobileMenuItem({
             <button
               type="button"
               onClick={() => setIsExpanded(!isExpanded)}
-              className="flex-1 rounded-xl px-3 py-3 text-left text-base font-medium text-heading transition-colors hover:bg-white/10 hover:text-primary"
+              className="flex-1 rounded-xl px-4 py-3 text-left text-base font-normal text-text transition-colors hover:bg-white/10 hover:text-primary [font-family:var(--font-plus-jakarta)]"
             >
               {title}
             </button>
@@ -126,8 +114,7 @@ export default function MobileMenuItem({
         onClick={onNavigate}
         target={openInNewTab ? "_blank" : undefined}
         rel={openInNewTab ? "noopener noreferrer" : undefined}
-        className="block rounded-xl px-4 py-3 text-base text-text transition-colors hover:bg-white/10 hover:text-primary"
-        style={{ paddingLeft: `${indent + 16}px` }}
+        className="block rounded-xl px-4 py-3 text-base text-text transition-colors hover:bg-white/10 hover:text-primary [font-family:var(--font-plus-jakarta)]"
       >
         {title}
       </a>

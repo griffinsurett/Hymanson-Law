@@ -1,7 +1,7 @@
 // src/utils/loaders/MenuItemsLoader.ts
 import { file } from 'astro/loaders';
 import type { Loader, LoaderContext } from 'astro/loaders';
-import { capitalize } from '@/utils/string';
+import { capitalize, humanizeSlug } from '@/utils/string';
 import { parseContentPath, isMetaFile } from '@/utils/paths';
 import { SimpleIdRegistry } from '@/utils/idRegistry';
 import { parseFrontmatterFromString } from '@/utils/filesystem/frontmatter';
@@ -141,6 +141,18 @@ function normalizeMenuReference(menu: any): any {
 
 function ensureArray<T>(value: T | T[]): T[] {
   return Array.isArray(value) ? value : [value];
+}
+
+function resolveMenuLabel(
+  collection: string,
+  slug: string,
+  data: Record<string, any>
+): string {
+  if (collection === 'where-we-serve') {
+    return humanizeSlug(slug);
+  }
+
+  return data.title ?? capitalize(slug);
 }
 
 function getCollectionMetaFromModules(
@@ -295,7 +307,7 @@ async function processItemMenus(
       store.set({
         id: itemId,
         data: {
-          title: menuConfig.title ?? data.title ?? capitalize(slug),
+          title: menuConfig.title ?? resolveMenuLabel(collection, slug, data),
           description: menuConfig.description ?? data.description,
           url: itemUrl,
           menu: menus,
@@ -502,7 +514,7 @@ async function processCollectionMenus(
           store.set({
             id: menuItemId,
             data: {
-              title: itemData.title ?? capitalize(slug),
+              title: resolveMenuLabel(collection, slug, itemData),
               description: itemData.description,
               url: itemUrl,
               menu: menus,

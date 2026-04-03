@@ -4,7 +4,7 @@ import { SITE_DOMAIN, SITE_URL } from "./siteDomain.js";
 export const siteData = {
   title: "Hymanson Law",
   legalName: "Hymanson Law",
-  description: "We successfully guide clients in Utah, New Jersey, New York in their estate planning, wealth and succession planning, estate and trust administration/litigation, real estate, commercial transactions and commercial litigation needs.",
+  description: "Here at Hymanson Law, we successfully guide clients in Utah, New Jersey, New York in their estate planning, wealth and succession planning, estate and trust administration/litigation, real estate, commercial transactions and commercial litigation needs.",
   domain: SITE_DOMAIN,
   url: SITE_URL,
   location: "Las Vegas, Nevada, USA",

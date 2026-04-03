@@ -34,11 +34,11 @@ const practices = await prepareCollectionEntries(entries, "areas-of-practice", c
     <div>
     <SectionHeading
       as="h2"
-      align="center"
+      align="left"
       description={description}
-      className="mx-auto max-w-4xl"
+      className="mx-auto max-w-4xl md:text-center"
       titleClass="font-newsreader text-[3.4rem] leading-[0.92] tracking-[-0.04em] text-heading md:text-[4.75rem] lg:text-[5.5rem]"
-      descriptionClass="mx-auto mt-5 max-w-3xl text-lg leading-relaxed text-text md:text-[1.375rem]"
+      descriptionClass="mt-5 max-w-3xl text-lg leading-relaxed text-text md:mx-auto md:text-[1.375rem]"
     >
       <Fragment slot="title">
         {leadingWords && <span class="text-heading">{leadingWords} </span>}

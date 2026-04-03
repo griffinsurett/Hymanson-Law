@@ -4,6 +4,7 @@
  * Contact Form - Astro Version
  * Pure HTML with optional React enhancement via client:idle
  */
+import { getCollection } from "astro:content";
 import FormWrapper from "@/components/Form/FormWrapper";
 import Input from "@/components/Form/inputs/Input";
 import Select from "@/components/Form/inputs/Select";
@@ -15,9 +16,15 @@ interface Props {
   title?: string;
   description?: string;
   className?: string;
+  hiddenFields?: Record<string, string | number | boolean>;
 }
 
-const { title, description, className = "" } = Astro.props;
+const {
+  title,
+  description,
+  className = "",
+  hiddenFields = {},
+} = Astro.props;
 const contactFormId =
   import.meta.env.PUBLIC_FORMSPREE_CONTACT_ID ||
   import.meta.env.PUBLIC_FORMSPREE_ID;
@@ -28,17 +35,13 @@ const handleSubmit = async () => {
   );
 };
 
-const practiceAreaOptions = [
-  { value: "estate-planning", label: "Estate Planning" },
-  { value: "business-law", label: "Business Law" },
-  { value: "commercial-litigation", label: "Commercial Litigation" },
-  { value: "real-estate-transactions", label: "Real Estate Transactions" },
-  {
-    value: "trust-estate-administration",
-    label: "Trust & Estate Administration",
-  },
-  { value: "general-inquiry", label: "General Inquiry" },
-];
+const practiceAreaEntries = await getCollection("areas-of-practice");
+const practiceAreaOptions = practiceAreaEntries
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
+  .map((entry) => ({
+    value: entry.slug,
+    label: entry.data.title,
+  }));
 
 const fieldLabelClassName =
   "mb-3 block text-xs font-semibold uppercase tracking-[0.08em] text-heading/70";
@@ -65,31 +68,48 @@ const fieldTextareaClassName =
     className="w-full"
   >
     <input type="hidden" name="formName" value="Greastro Contact Form" />
+    {
+      Object.entries(hiddenFields).map(([name, value]) => (
+        <input type="hidden" name={name} value={String(value)} />
+      ))
+    }
 
-    <div class="grid gap-4 sm:grid-cols-2">
+    <div class="mb-4 grid gap-4 sm:grid-cols-2">
       <Input
-        name="fullName"
-        label="Full Name"
+        name="firstName"
+        label="First Name"
         type="text"
         required={true}
         minLength={2}
-        placeholder="John Doe"
-        containerClassName="mb-0 flex-1"
+        placeholder="John"
+        containerClassName="mb-0"
         labelClassName={fieldLabelClassName}
         inputClassName={fieldInputClassName}
       />
 
       <Input
-        name="email"
-        label="Email Address"
-        type="email"
+        name="lastName"
+        label="Last Name"
+        type="text"
         required={true}
-        placeholder="john@example.com"
-        containerClassName="mb-0 flex-1"
+        minLength={2}
+        placeholder="Doe"
+        containerClassName="mb-0"
         labelClassName={fieldLabelClassName}
         inputClassName={fieldInputClassName}
       />
     </div>
+
+    <Input
+      name="email"
+      label="Email Address"
+      type="email"
+      required={true}
+      placeholder="john@example.com"
+      containerClassName="mb-4"
+      labelClassName={fieldLabelClassName}
+      inputClassName={fieldInputClassName}
+    />
 
     <Select
       name="practiceArea"
