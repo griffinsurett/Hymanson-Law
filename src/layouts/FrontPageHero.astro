@@ -131,7 +131,10 @@ const quoteCardAnimation = animationProps("fade-in-up", {
       </div>
 
       {/* CTA Buttons */}
-      <div {...ctaAnimation} class="flex flex-wrap justify-start gap-4 lg:gap-12">
+      <div
+        {...ctaAnimation}
+        class="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:justify-start lg:gap-12"
+      >
         {
           primaryCTA && (
             <Button
