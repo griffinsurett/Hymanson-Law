@@ -16,7 +16,7 @@
   }
 
   .site-header .header-phone-desktop {
-    @apply hidden md:flex;
+    @apply hidden xl:flex;
   }
 
   .site-header .header-sticky-cta {
@@ -24,7 +24,7 @@
   }
 
   .hero-frame .site-header.is-stuck .header-sticky-cta {
-    @apply md:flex;
+    @apply xl:flex;
   }
 
   .hero-frame .site-header .menu-dropdown ul {
