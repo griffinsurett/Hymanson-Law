@@ -13,7 +13,7 @@ const filterByLinksMenu = (entry: any) => {
 };
 ---
 
-<BaseLayout title="Links" description="All my important links in one place">
+<BaseLayout title="Links" description="All my important links in one place" addToLLMs={false}>
   <ContentRenderer
     query={query("menu-items")
       .where(filterByLinksMenu)
