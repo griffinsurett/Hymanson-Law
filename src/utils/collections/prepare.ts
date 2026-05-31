@@ -4,15 +4,15 @@
  */
 
 import type { CollectionKey, CollectionEntry } from "astro:content";
+import { render as renderEntry } from "astro:content";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import type { MetaData, BaseData } from "@/content/schema";
-import { getItemKey } from "./core";
 
 // ❌ NO imports that touch pages/filesystem during module load
 // ✅ Import inside functions
 
 export interface PreparedFields {
-  slug: string;
+  id: string;
   url?: string;
   displayValue?: string;
   /** Lazy render function - call to get Content component when needed */
@@ -30,8 +30,8 @@ function formatSlugLabel(slug: string): string {
     .join(" ");
 }
 
-/** Normalize parent reference to first parent slug (handles array or string) */
-function getFirstParentSlug(parent: string | string[] | undefined): string | undefined {
+/** Normalize parent reference to first parent id (handles array or string) */
+function getFirstParentId(parent: string | string[] | undefined): string | undefined {
   if (!parent) return undefined;
   if (Array.isArray(parent)) return parent[0];
   return parent;
@@ -51,12 +51,12 @@ export async function prepareEntry<T extends CollectionKey>(
     "@/utils/links/linkBehavior"
   );
 
-  const identifier = getItemKey(entry);
+  const identifier = entry.id;
   const data = entry.data as Record<string, any>;
 
   // Resolve parent entry if item has a parent and we have entries map
-  const parentSlug = getFirstParentSlug(data.parent);
-  const parentEntry = parentSlug && entriesMap ? entriesMap.get(parentSlug) : undefined;
+  const parentId = getFirstParentId(data.parent);
+  const parentEntry = parentId && entriesMap ? entriesMap.get(parentId) : undefined;
 
   // Check for link behavior config (item-level overrides collection-level)
   const linkBehavior = mergeLinkBehavior(
@@ -68,12 +68,10 @@ export async function prepareEntry<T extends CollectionKey>(
   let displayValue: string | undefined;
 
   if (linkBehavior) {
-    // Use link behavior to determine URL and display value
     const linkResult = applyLinkBehavior(data, linkBehavior, collection as string, identifier);
     itemUrl = linkResult.url;
     displayValue = linkResult.displayValue;
   } else {
-    // Standard URL generation
     const hasExistingUrl = data.url !== undefined;
     const hasPage = shouldItemHavePage(entry, meta, parentEntry);
 
@@ -87,20 +85,17 @@ export async function prepareEntry<T extends CollectionKey>(
     displayValue = formatSlugLabel(identifier);
   }
 
-  // Store raw body for variants that need it - don't render Content here
-  // Rendering MDX Content is expensive and should only happen when actually displayed
-  // Variants that need full content (like AccordionVariant) can call entry.render() themselves
   let content: string | undefined;
   if ("body" in entry) {
     content = (entry as any).body;
   }
 
-  // Store render function for lazy rendering - only called when Content is actually needed
-  const renderFn = (entry as any).render;
+  const hasBody = "body" in entry && (entry as any).body;
+  const renderFn = hasBody ? () => renderEntry(entry as any) : undefined;
 
   return {
     ...data,
-    slug: identifier,
+    id: identifier,
     ...(itemUrl && { url: itemUrl }),
     ...(displayValue && { displayValue }),
     ...(renderFn && { render: renderFn }),
@@ -113,11 +108,9 @@ export async function prepareCollectionEntries<T extends CollectionKey>(
   collection: T,
   meta: MetaData
 ): Promise<PreparedItem[]> {
-  // Build a map of entries by slug for efficient parent lookup
   const entriesMap = new Map<string, CollectionEntry<T>>();
   for (const entry of entries) {
-    const key = getItemKey(entry);
-    if (key) entriesMap.set(key, entry);
+    if (entry.id) entriesMap.set(entry.id, entry);
   }
 
   return Promise.all(

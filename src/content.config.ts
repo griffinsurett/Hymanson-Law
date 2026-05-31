@@ -1,30 +1,14 @@
-// src/content/config.ts
-/**
- * Collection structure:
- *
- * src/content/[collection]/
- *   _meta.mdx         ← Collection config (frontmatter) + index page content (body)
- *                        The _ prefix excludes it from collection entries
- *   item-one.mdx      ← Collection item
- *   item-two.mdx      ← Collection item
- *
- * _meta.mdx frontmatter controls:
- * - title: Display name for the collection
- * - description: Collection description
- * - hasPage: Whether to generate /[collection] index page
- * - itemsHasPage: Whether items get individual pages
- * - featuredImage: Hero image for index page
- * - seo: SEO overrides
- */
-import { file, glob } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
-import { baseSchema, MenuSchema, MenuItemFields, refSchema } from "./schema";
+// src/content.config.ts
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
+import { GlobLoad, FileLoad } from "@/utils/loaders/loaderUtils";
+import { baseSchema, MenuSchema, MenuItemFields, refSchema } from "./content/schema";
 import { MenuItemsLoader } from "@/utils/loaders/MenuItemsLoader";
 
 export const collections = {
   // ── menus.json ─────────────────────────────────────────
   "menus": defineCollection({
-    loader: file("src/content/menus/menus.json"),
+    loader: FileLoad("menus", "menus.json"),
     schema: MenuSchema,
   }),
 
@@ -35,7 +19,7 @@ export const collections = {
   }),
 
   "contact-us": defineCollection({
-    loader: file("src/content/contact-us/contact-us.json"),
+    loader: FileLoad("contact-us", "contact-us.json"),
     schema: ({ image }) =>
       baseSchema({ image }).extend({
         linkPrefix: z.string().optional(),
@@ -43,7 +27,7 @@ export const collections = {
   }),
 
   "stats": defineCollection({
-    loader: file("src/content/stats/stats.json"),
+    loader: FileLoad("stats", "stats.json"),
     schema: ({ image }) =>
       baseSchema({ image }).extend({
         value: z.number(),
@@ -54,7 +38,7 @@ export const collections = {
   }),
 
   "social-media": defineCollection({
-    loader: file("src/content/social-media/socialmedia.json"),
+    loader: FileLoad("social-media", "socialmedia.json"),
     schema: ({ image }) =>
       baseSchema({ image }).extend({
         link: z.string().optional(),
@@ -63,6 +47,7 @@ export const collections = {
 
   // ── legal ───────────────────────────────────────────────
   "legal": defineCollection({
+    loader: GlobLoad("legal"),
     schema: ({ image }) =>
       baseSchema({ image }).extend({
         effectiveDate: z
@@ -77,11 +62,13 @@ export const collections = {
   }),
 
   "about": defineCollection({
+    loader: GlobLoad("about"),
     schema: ({ image }) =>
       baseSchema({ image })
   }),
 
   "blog": defineCollection({
+    loader: GlobLoad("blog"),
     schema: ({ image }) =>
       baseSchema({ image }).extend({
         author: refSchema("authors"),
@@ -91,7 +78,7 @@ export const collections = {
   }),
 
   "authors": defineCollection({
-    loader: file("src/content/authors/authors.json"),
+    loader: FileLoad("authors", "authors.json"),
     schema: ({ image }) =>
       baseSchema({ image }).extend({
         email: z.string().email().optional(),
@@ -108,20 +95,19 @@ export const collections = {
   }),
 
   "areas-of-practice": defineCollection({
-    loader: glob({
-      base: "./src/content/areas-of-practice",
-      pattern: "**/[!_]*.mdx",
-    }),
+    loader: GlobLoad("areas-of-practice"),
     schema: ({ image }) =>
       baseSchema({ image }),
   }),
 
   "where-we-serve": defineCollection({
+    loader: GlobLoad("where-we-serve"),
     schema: ({ image }) =>
       baseSchema({ image }),
   }),
 
   "testimonials": defineCollection({
+    loader: GlobLoad("testimonials"),
     schema: ({ image }) =>
       baseSchema({ image }).extend({
         role: z.string(),
@@ -131,6 +117,7 @@ export const collections = {
   }),
 
   "faq": defineCollection({
+    loader: GlobLoad("faq"),
     schema: ({ image }) =>
       baseSchema({ image }).extend({
         category: z.string().optional(),
