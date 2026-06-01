@@ -28,6 +28,7 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
+        '@site': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
     plugins: [tailwindcss()],
